@@ -29,21 +29,32 @@
             charcoal: '#333333', // Slate Charcoal
           },
           boxShadow: {
-            soft: '0 10px 30px rgba(0,0,0,.18)',
-            line: '0 1px 0 rgba(255,255,255,.08)',
+            soft: '0 10px 30px rgba(0,0,0,.20)',
+            soft2: '0 18px 45px rgba(0,0,0,.28)',
+            hair: '0 1px 0 rgba(255,255,255,.10)',
           },
           keyframes: {
+            shimmer: {
+              '0%': { transform: 'translateX(-120%)' },
+              '100%': { transform: 'translateX(120%)' }
+            },
             floaty: {
               '0%,100%': { transform: 'translateY(0px)' },
               '50%': { transform: 'translateY(-6px)' }
             },
             draw: {
-              '0%': { strokeDashoffset: '240' },
+              '0%': { strokeDashoffset: '220' },
               '100%': { strokeDashoffset: '0' }
+            },
+            pop: {
+              '0%': { opacity: 0, transform: 'translateY(10px) scale(.98)' },
+              '100%': { opacity: 1, transform: 'translateY(0) scale(1)' }
             }
           },
           animation: {
+            shimmer: 'shimmer 1.6s ease-in-out infinite',
             floaty: 'floaty 6s ease-in-out infinite',
+            pop: 'pop .55s ease forwards',
           }
         }
       }
@@ -58,136 +69,203 @@
       --charcoal:#333333;
     }
 
-    /* Premium selection */
-    ::selection{ background: rgba(197,160,89,.35); }
+    html, body { height: 100%; }
 
-    /* Subtle “blueprint” grid */
-    .blueprint-grid{
-      background-image:
-        linear-gradient(to right, rgba(197,160,89,.10) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(197,160,89,.10) 1px, transparent 1px);
-      background-size: 34px 34px;
-      mask-image: radial-gradient(circle at 30% 20%, rgba(0,0,0,1), rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 75%);
-      -webkit-mask-image: radial-gradient(circle at 30% 20%, rgba(0,0,0,1), rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 75%);
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
     }
 
-    /* Fade-in on scroll */
-    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; }
-    .reveal.is-visible{ opacity:1; transform: translateY(0); }
+    ::selection{ background: rgba(197,160,89,.35); }
 
-    /* Glass header */
+    /* Premium blueprint grid (subtle) */
+    .blueprint-grid{
+      background-image:
+        linear-gradient(to right, rgba(197,160,89,.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(197,160,89,.12) 1px, transparent 1px);
+      background-size: 38px 38px;
+      opacity: .55;
+      mask-image: radial-gradient(circle at 35% 25%, rgba(0,0,0,1), rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 78%);
+      -webkit-mask-image: radial-gradient(circle at 35% 25%, rgba(0,0,0,1), rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 78%);
+      pointer-events: none;
+    }
+
+    /* Glass header (better readability) */
     .glass{
-      background: rgba(26,43,60,.62);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(18, 31, 44, .55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255,255,255,.08);
     }
     .glass.shrink{
-      background: rgba(26,43,60,.72);
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      background: rgba(18, 31, 44, .78);
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
     }
 
-    /* Video overlay */
-    .hero-overlay{
-      background:
-        radial-gradient(80% 60% at 30% 35%, rgba(197,160,89,.18), rgba(197,160,89,0) 60%),
-        linear-gradient(180deg, rgba(26,43,60,.78), rgba(26,43,60,.62) 45%, rgba(26,43,60,.86));
-    }
-
-    /* Underline hover */
-    .navlink{
-      position: relative;
-    }
+    /* Nav underline */
+    .navlink{ position: relative; }
     .navlink:after{
       content:'';
       position:absolute;
-      left:0; bottom:-8px;
+      left:0; bottom:-10px;
       width:0%;
       height:1px;
-      background: rgba(197,160,89,.9);
-      transition: width .25s ease;
+      background: rgba(197,160,89,.95);
+      transition: width .22s ease;
     }
     .navlink:hover:after{ width:100%; }
 
-    /* Button focus */
     .focus-ring:focus-visible{
-      outline: 2px solid rgba(197,160,89,.9);
+      outline: 2px solid rgba(197,160,89,.95);
       outline-offset: 3px;
     }
 
-    /* Mono callout chip */
-    .chip{
-      border: 1px solid rgba(197,160,89,.28);
-      background: rgba(229,229,229,.06);
+    /* Hero overlay tuned */
+    .hero-overlay{
+      background:
+        radial-gradient(85% 70% at 30% 30%, rgba(197,160,89,.18), rgba(197,160,89,0) 60%),
+        linear-gradient(180deg, rgba(26,43,60,.82), rgba(26,43,60,.62) 45%, rgba(26,43,60,.92));
     }
 
-    /* SVG line draw */
-    .drawline{
-      stroke-dasharray: 240;
-      stroke-dashoffset: 240;
+    /* Reveal */
+    .reveal{
+      opacity:0;
+      transform: translateY(16px);
+      transition: opacity .75s ease, transform .75s ease;
+      will-change: opacity, transform;
     }
-    .is-visible .drawline{
-      animation: draw 1.3s ease forwards .2s;
+    .reveal.is-visible{ opacity:1; transform: translateY(0); }
+
+    /* SVG draw */
+    .drawline{ stroke-dasharray: 220; stroke-dashoffset: 220; }
+    .is-visible .drawline{ animation: draw 1.25s ease forwards .12s; }
+
+    /* Loading screen */
+    .page-loader{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0f1f2d;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition: opacity .35s ease, visibility .35s ease;
+    }
+    .page-loader.is-hidden{
+      opacity: 0;
+      visibility: hidden;
+      pointer-events:none;
+    }
+    .loader-card{
+      width: min(520px, calc(100% - 48px));
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      border-radius: 26px;
+      padding: 28px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-shimmer{
+      position:absolute;
+      inset:0;
+      transform: translateX(-120%);
+      background: linear-gradient(90deg, transparent, rgba(197,160,89,.10), transparent);
+      animation: shimmer 1.6s ease-in-out infinite;
+    }
+
+    /* Better video performance */
+    video { filter: saturate(1.05) contrast(1.05); }
+
+    /* Mobile menu slide */
+    .mobile-panel{
+      transform: translateY(-8px);
+      opacity: 0;
+      transition: opacity .22s ease, transform .22s ease;
+    }
+    .mobile-panel.open{
+      transform: translateY(0);
+      opacity: 1;
     }
   </style>
 </head>
 
 <body class="bg-navy text-stone font-sans antialiased">
+  <!-- Page Loader (fix: reliable hide + reduced motion safe) -->
+  <div id="pageLoader" class="page-loader" aria-hidden="false">
+    <div class="loader-card">
+      <div class="loader-shimmer"></div>
+
+      <div class="flex items-center gap-3">
+        <div class="leading-tight">
+          <div class="font-display text-xl tracking-wide text-stone">GrihoGori</div>
+          <div class="text-xs text-stone/70">Design. Build. Live.</div>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-3">
+        <div class="h-3 w-40 rounded-full bg-white/10"></div>
+        <div class="h-3 w-72 rounded-full bg-white/10"></div>
+        <div class="h-3 w-56 rounded-full bg-white/10"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Header -->
   <header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 glass transition-all duration-300">
-    <div class="mx-auto max-w-7xl px-5">
-      <div class="flex h-20 items-center justify-between gap-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-5">
+      <div class="flex h-20 items-center justify-between gap-3">
         <!-- Logo -->
-        <a href="#top" class="flex items-center gap-3 focus-ring rounded-lg">
-          <div class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5">
-            <!-- Minimal “G” mark -->
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M20 12a8 8 0 1 1-2.35-5.65" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M20 12h-6" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
+        <a href="#top" class="flex items-center gap-3 focus-ring rounded-xl">
           <div class="leading-tight">
             <div class="font-display text-lg tracking-wide text-stone">GrihoGori</div>
             <div class="text-xs text-stone/70">Design. Build. Live.</div>
           </div>
         </a>
 
-        <!-- Nav -->
-        <nav class="hidden lg:flex items-center gap-7 text-sm text-stone/85">
-          <a class="navlink focus-ring rounded-md" href="#difference">Difference</a>
-          <a class="navlink focus-ring rounded-md" href="#pillars">Pillars</a>
-          <a class="navlink focus-ring rounded-md" href="#numbers">By the Numbers</a>
-          <a class="navlink focus-ring rounded-md" href="#promise">2026 Promise</a>
+        <!-- Desktop Nav -->
+        <nav class="hidden xl:flex items-center gap-7 text-sm text-stone/85">
+          <a class="navlink focus-ring rounded-md" href="#top">HOMEPAGE</a>
+          <a class="navlink focus-ring rounded-md" href="#about">ABOUT US</a>
+          <a class="navlink focus-ring rounded-md" href="#services">SERVICES</a>
+          <a class="navlink focus-ring rounded-md" href="#portfolio">PORTFOLIO</a>
+          <a class="navlink focus-ring rounded-md" href="#process">OUR PROCESS</a>
+          <a class="navlink focus-ring rounded-md" href="#insights">INSIGHTS</a>
         </nav>
 
         <!-- Actions -->
-        <div class="flex items-center gap-3">
-          <a href="#projects" class="hidden sm:inline-flex focus-ring items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-stone/90 hover:bg-white/10 transition">
-            View Our Masterpieces
-          </a>
-          <a href="#consultation" class="focus-ring inline-flex items-center justify-center rounded-xl bg-gold px-4 py-2 text-sm font-semibold text-navy hover:opacity-95 transition">
-            Request a Turnkey Consultation
+        <div class="flex items-center gap-2 sm:gap-3">
+          <a href="#contact" class="focus-ring inline-flex items-center justify-center rounded-xl bg-gold px-4 py-2 text-sm font-semibold text-navy hover:opacity-95 transition">
+            CONTACT
           </a>
 
-          <!-- Mobile menu button -->
-          <button id="menuBtn" class="lg:hidden focus-ring inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition" aria-label="Open menu" aria-expanded="false">
+          <!-- Mobile menu -->
+          <button id="menuBtn" class="xl:hidden focus-ring inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" stroke="rgba(229,229,229,.9)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4 7h16M4 12h16M4 17h16" stroke="rgba(229,229,229,.92)" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </button>
         </div>
       </div>
 
-      <!-- Mobile nav -->
-      <div id="mobileNav" class="lg:hidden hidden pb-5">
-        <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
-          <div class="grid gap-3 text-sm text-stone/85">
-            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#difference">Difference</a>
-            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#pillars">Pillars</a>
-            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#numbers">By the Numbers</a>
-            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#promise">2026 Promise</a>
-            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#projects">View Our Masterpieces</a>
-            <a class="focus-ring rounded-md px-2 py-2 bg-gold text-navy font-semibold" href="#consultation">Request a Turnkey Consultation</a>
+      <!-- Mobile Nav (fixed: proper responsive + animation + accessibility) -->
+      <div id="mobileNav" class="xl:hidden hidden pb-4">
+        <div id="mobilePanel" class="mobile-panel rounded-2xl border border-white/10 bg-black/30 p-3">
+          <div class="grid gap-1 text-sm text-stone/88">
+            <a class="focus-ring rounded-xl px-3 py-2 hover:bg-white/5" href="#top">HOMEPAGE</a>
+            <a class="focus-ring rounded-xl px-3 py-2 hover:bg-white/5" href="#about">ABOUT US</a>
+            <a class="focus-ring rounded-xl px-3 py-2 hover:bg-white/5" href="#services">SERVICES</a>
+            <a class="focus-ring rounded-xl px-3 py-2 hover:bg-white/5" href="#portfolio">PORTFOLIO</a>
+            <a class="focus-ring rounded-xl px-3 py-2 hover:bg-white/5" href="#process">OUR PROCESS</a>
+            <a class="focus-ring rounded-xl px-3 py-2 hover:bg-white/5" href="#insights">INSIGHTS</a>
+            <div class="mt-2 grid gap-2">
+              <a href="#contact" class="focus-ring rounded-xl bg-gold px-3 py-2 text-center text-sm font-semibold text-navy hover:opacity-95 transition">CONTACT</a>
+            </div>
           </div>
         </div>
       </div>
@@ -197,27 +275,22 @@
   <main id="top">
     <!-- HERO -->
     <section class="relative min-h-[92vh] pt-28">
-      <!-- Background video -->
+      <!-- Background video (replace with your BIM→finished clip) -->
       <video
         class="absolute inset-0 h-full w-full object-cover"
-        autoplay muted loop playsinline
+        autoplay muted loop playsinline preload="metadata"
         poster="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2000&q=70">
-        <!-- Replace with your actual cinematic BIM-to-finished video -->
         <source src="https://cdn.coverr.co/videos/coverr-construction-site-1571/1080p.mp4" type="video/mp4" />
       </video>
 
-      <!-- Overlay -->
       <div class="absolute inset-0 hero-overlay"></div>
+      <div class="absolute inset-0 blueprint-grid"></div>
 
-      <!-- Blueprint grid -->
-      <div class="pointer-events-none absolute inset-0 blueprint-grid opacity-60"></div>
-
-      <!-- Content -->
-      <div class="relative mx-auto max-w-7xl px-5">
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-5">
         <div class="grid gap-10 lg:grid-cols-12 items-center">
           <div class="lg:col-span-7">
             <div class="reveal">
-              <div class="inline-flex items-center gap-2 rounded-full px-4 py-2 chip font-mono text-xs text-stone/80">
+              <div class="inline-flex items-center gap-2 rounded-full px-4 py-2 border border-white/10 bg-white/5 font-mono text-xs text-stone/80">
                 <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
                 <span>Subsurface Honesty • Absolute Transparency</span>
               </div>
@@ -228,32 +301,31 @@
               </h1>
 
               <p class="mt-5 max-w-2xl text-base leading-relaxed text-stone/80 sm:text-lg">
-                GrihoGori is a multidisciplinary design-build studio where architectural poetry meets the unyielding
-                logic of precision engineering. Specializing in high-end residential villas, commercial landmarks,
-                and turnkey luxury interiors, we redefine the standard of modern living through <span class="text-stone">Subsurface Honesty</span> and
-                absolute transparency.
+                GrihoGori is a multidisciplinary design-build studio where architectural poetry meets the unyielding logic of precision engineering.
+                Specializing in high-end residential villas, commercial landmarks, and turnkey luxury interiors, we redefine the standard of modern living
+                through <span class="text-stone">Subsurface Honesty</span> and absolute transparency.
               </p>
 
               <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a href="#projects" class="focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
+                <a href="#portfolio" class="focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
                   View Our Masterpieces
                 </a>
-                <a href="#consultation" class="focus-ring inline-flex items-center justify-center rounded-2xl border border-white/12 bg-white/5 px-6 py-3 text-sm font-semibold text-stone hover:bg-white/10 transition">
+                <a href="#contact" class="focus-ring inline-flex items-center justify-center rounded-2xl border border-white/12 bg-white/5 px-6 py-3 text-sm font-semibold text-stone hover:bg-white/10 transition">
                   Request a Turnkey Consultation
                 </a>
               </div>
 
-              <!-- Technical callouts -->
+              <!-- Technical callouts (responsive fixed) -->
               <div class="mt-10 grid gap-3 sm:grid-cols-3">
-                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div class="rounded-2xl border border-white/10 bg-black/25 p-4">
                   <div class="font-mono text-xs text-stone/70">BOQ Discipline</div>
                   <div class="mt-1 text-sm text-stone/90">Line-item clarity, zero ambiguity.</div>
                 </div>
-                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div class="rounded-2xl border border-white/10 bg-black/25 p-4">
                   <div class="font-mono text-xs text-stone/70">Grade-Certified Build</div>
                   <div class="mt-1 text-sm text-stone/90">Grade-60 rebar, M-25 concrete.</div>
                 </div>
-                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div class="rounded-2xl border border-white/10 bg-black/25 p-4">
                   <div class="font-mono text-xs text-stone/70">BIM Digital Twin</div>
                   <div class="mt-1 text-sm text-stone/90">Clash-free execution on site.</div>
                 </div>
@@ -261,15 +333,15 @@
             </div>
           </div>
 
-          <!-- Right “legacy card” -->
+          <!-- Right card -->
           <div class="lg:col-span-5">
             <div class="reveal lg:justify-self-end">
-              <div class="rounded-3xl border border-white/10 bg-black/25 p-6 shadow-soft">
+              <div class="rounded-3xl border border-white/10 bg-black/30 p-6 shadow-soft2">
                 <div class="flex items-start justify-between gap-4">
                   <div>
-                    <div class="font-display text-xl text-stone">The Master Builder Tradition</div>
+                    <div class="font-display text-xl text-stone">The Majesty of Integrated Design</div>
                     <p class="mt-2 text-sm leading-relaxed text-stone/75">
-                      One studio. One accountable team. From concept to keys—engineered with precision, delivered with calm.
+                      One accountable team from concept to keys—engineered with precision, delivered with calm.
                     </p>
                   </div>
                   <div class="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/5 animate-floaty">
@@ -280,17 +352,15 @@
                   </div>
                 </div>
 
-                <!-- Mini “equation” -->
                 <div class="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div class="font-mono text-xs text-stone/70">Integrity is measurable:</div>
+                  <div class="font-mono text-xs text-stone/70">Engineering-grade clarity:</div>
                   <div class="mt-2 font-mono text-sm text-stone/90">
                     Quality = (Material Grade) × (Audit Frequency) × (Documentation)
                   </div>
                 </div>
 
-                <!-- Scrolldown cue -->
-                <a href="#difference" class="mt-6 inline-flex items-center gap-2 text-sm text-stone/75 hover:text-stone transition focus-ring rounded-lg">
-                  <span>Explore the Difference</span>
+                <a href="#process" class="mt-6 inline-flex items-center gap-2 text-sm text-stone/75 hover:text-stone transition focus-ring rounded-lg">
+                  <span>Explore Our Process</span>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M12 5v14" stroke="rgba(229,229,229,.8)" stroke-width="2" stroke-linecap="round"/>
                     <path d="M7 14l5 5 5-5" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -298,10 +368,9 @@
                 </a>
               </div>
 
-              <!-- Little label -->
-              <div class="mt-4 text-xs text-stone/55">
-                Visual suggestion: Replace this video with your BIM → finished cinematic transition.
-              </div>
+              <p class="mt-4 text-xs text-stone/55">
+                Replace the video link with your BIM → finished cinematic transition for maximum impact.
+              </p>
             </div>
           </div>
         </div>
@@ -309,24 +378,27 @@
     </section>
 
     <!-- DIFFERENCE -->
-    <section id="difference" class="relative py-20 sm:py-24">
-      <div class="mx-auto max-w-7xl px-5">
+    <section id="about" class="relative py-20 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-5">
         <div class="reveal">
           <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
             <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
-            <span>ONE TEAM. ONE VISION. ZERO STRESS.</span>
+            <span>THE GRIHOGORI DIFFERENCE</span>
           </div>
           <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
-            The GrihoGori Difference
+            One Team. One Vision. Zero Stress.
           </h2>
           <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
-            Traditional construction is often a battleground. You are caught between an Architect who dreams beyond your budget and a Contractor who simplifies your design for their own convenience.
-            This fragmentation leads to <span class="text-stone">the mistake tax</span>—unnecessary delays, budget overruns, and compromised structural quality.
+            Traditional construction is often a battleground. You are caught between an Architect who dreams beyond your budget and a Contractor
+            who simplifies your design for their own convenience. This fragmentation leads to the <span class="text-stone">mistake tax</span>—delays,
+            budget overruns, and compromised structural quality.
+          </p>
+          <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
+            At GrihoGori, we have unified the journey. By reviving the “Master Builder” tradition for 2026, we act as your single point of responsibility.
           </p>
         </div>
 
         <div class="mt-10 grid gap-6 lg:grid-cols-3">
-          <!-- Unified Accountability -->
           <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
             <div class="flex items-center gap-3">
               <div class="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-black/20">
@@ -339,15 +411,11 @@
               <h3 class="font-display text-xl text-stone">Unified Accountability</h3>
             </div>
             <p class="mt-4 text-sm leading-relaxed text-stone/75">
-              We own the friction so you can enjoy the flow. From the first conceptual sketch to the final brick laid,
+              We own the friction so you can enjoy the flow. From the first sketch to the final brick laid,
               our architects and engineers work at the same table.
             </p>
-            <div class="mt-5 font-mono text-xs text-stone/70">
-              Output: <span class="text-stone/90">Single point of responsibility</span>
-            </div>
           </article>
 
-          <!-- Digital Twin -->
           <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
             <div class="flex items-center gap-3">
               <div class="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-black/20">
@@ -359,15 +427,10 @@
               <h3 class="font-display text-xl text-stone">Digital-Twin Accuracy</h3>
             </div>
             <p class="mt-4 text-sm leading-relaxed text-stone/75">
-              We build your home twice—first in a high-fidelity digital environment (BIM) to detect clashes,
-              and then on your land with surgical precision.
+              We build your home twice—first in BIM to detect clashes, then on your land with surgical precision.
             </p>
-            <div class="mt-5 font-mono text-xs text-stone/70">
-              Method: <span class="text-stone/90">BIM clash detection</span>
-            </div>
           </article>
 
-          <!-- Price Certainty -->
           <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
             <div class="flex items-center gap-3">
               <div class="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-black/20">
@@ -379,92 +442,70 @@
               <h3 class="font-display text-xl text-stone">Price Certainty</h3>
             </div>
             <p class="mt-4 text-sm leading-relaxed text-stone/75">
-              Our Turnkey approach means no “surprise” invoices. We provide cost-certainty in a volatile market
-              by managing the entire supply chain for you.
+              Our Turnkey approach means no “surprise” invoices. We provide cost-certainty by managing procurement end-to-end.
             </p>
-            <div class="mt-5 font-mono text-xs text-stone/70">
-              Deliverable: <span class="text-stone/90">Turnkey BOQ + controlled procurement</span>
-            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- PILLARS -->
-    <section id="pillars" class="py-20 sm:py-24 bg-black/10">
-      <div class="mx-auto max-w-7xl px-5">
+    <!-- SERVICES / PILLARS -->
+    <section id="services" class="py-20 sm:py-24 bg-black/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-5">
         <div class="reveal">
           <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
             <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
             <span>THE THREE PILLARS OF EXCELLENCE</span>
           </div>
           <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
-            Architecture. Engineering. Interior Craft.
+            Architecture. Construction. Interior Architecture.
           </h2>
-          <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
-            High-end living is never accidental. It is curated in drawings, proven in steel, and felt in the quiet confidence of a finished space.
-          </p>
         </div>
 
         <div class="mt-10 grid gap-6 lg:grid-cols-3">
-          <!-- Pillar 1 -->
           <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <h3 class="font-display text-2xl text-stone">I. Visionary Architecture & Master Planning</h3>
-                <p class="mt-3 text-sm leading-relaxed text-stone/75">
-                  We design buildings that are landmarks, not just addresses. We don't just draft floor plans; we curate environments.
-                  Our designs are optimized for <span class="text-stone">Biophilic Harmony</span>—maximizing natural light, airflow, and solar orientation.
-                  Utilizing advanced 3D visualizations and VR walkthroughs, we ensure you “live” in your home before ground is broken.
-                  Every line we draw is backed by structural feasibility.
-                </p>
-              </div>
-            </div>
+            <h3 class="font-display text-2xl text-stone">I. Visionary Architecture & Master Planning</h3>
+            <p class="mt-3 text-sm leading-relaxed text-stone/75">
+              We design buildings that are landmarks, not just addresses. Our designs are optimized for Biophilic Harmony—maximizing natural light, airflow,
+              and solar orientation. With advanced 3D visualizations and VR walkthroughs, you “live” in your home before ground is broken.
+              Every line we draw is backed by structural feasibility.
+            </p>
             <div class="mt-6 flex flex-wrap gap-2">
-              <span class="chip rounded-full px-3 py-1 font-mono text-xs text-stone/75">Master Planning</span>
-              <span class="chip rounded-full px-3 py-1 font-mono text-xs text-stone/75">VR Walkthrough</span>
-              <span class="chip rounded-full px-3 py-1 font-mono text-xs text-stone/75">Solar Orientation</span>
+              <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/75">Master Planning</span>
+              <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/75">3D + VR</span>
+              <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/75">Biophilic</span>
             </div>
           </article>
 
-          <!-- Pillar 2 -->
           <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft">
             <h3 class="font-display text-2xl text-stone">II. High-Performance Construction (The Master Build)</h3>
             <p class="mt-3 text-sm leading-relaxed text-stone/75">
-              Engineering with “Subsurface Honesty.” Construction is an act of trust. We honor that trust by prioritizing what is hidden.
-              Our builds utilize <span class="text-stone">Grade-60 Deformed Steel</span> and <span class="text-stone">M-25 certified concrete</span>,
-              specifically engineered to withstand long-term environmental stress and seismic cycles.
-              We prove our quality through daily digital logs and rigorous structural audits, ensuring a foundation that outlasts generations.
+              Engineering with Subsurface Honesty. Our builds utilize Grade-60 Deformed Steel and M-25 certified concrete,
+              engineered to withstand long-term environmental stress and seismic cycles. Quality is proven via daily digital logs
+              and rigorous structural audits.
             </p>
-
             <div class="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
               <div class="font-mono text-xs text-stone/70">Technical Snapshot</div>
               <div class="mt-2 grid gap-2 text-sm">
                 <div class="flex items-center justify-between gap-4">
-                  <span class="text-stone/75">Rebar</span>
-                  <span class="font-mono text-stone/90">Grade-60</span>
+                  <span class="text-stone/75">Rebar</span><span class="font-mono text-stone/90">Grade-60</span>
                 </div>
                 <div class="flex items-center justify-between gap-4">
-                  <span class="text-stone/75">Concrete</span>
-                  <span class="font-mono text-stone/90">M-25</span>
+                  <span class="text-stone/75">Concrete</span><span class="font-mono text-stone/90">M-25</span>
                 </div>
                 <div class="flex items-center justify-between gap-4">
-                  <span class="text-stone/75">Audit Logs</span>
-                  <span class="font-mono text-stone/90">Daily</span>
+                  <span class="text-stone/75">Logs</span><span class="font-mono text-stone/90">Daily</span>
                 </div>
               </div>
             </div>
           </article>
 
-          <!-- Pillar 3 -->
           <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft">
             <h3 class="font-display text-2xl text-stone">III. Bespoke Interior Architecture</h3>
             <p class="mt-3 text-sm leading-relaxed text-stone/75">
-              Soulful spaces, anthropocentric design. A GrihoGori interior is a sensory experience.
-              We go beyond “decorating” to perform true Interior Architecture. We focus on how light, sound, and texture impact your well-being.
-              From AI-integrated smart lighting to custom modular cabinetry and handcrafted stone finishes, we create interiors that are a seamless extension of your personality.
+              Soulful spaces, anthropocentric design. We go beyond decorating to true Interior Architecture—how light, sound, and texture
+              impact well-being. From AI-integrated smart lighting to custom modular cabinetry and stone finishes, interiors become an extension of you.
             </p>
-
             <div class="mt-6 grid gap-3 sm:grid-cols-2">
               <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
                 <div class="font-mono text-xs text-stone/70">Lighting</div>
@@ -472,7 +513,7 @@
               </div>
               <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
                 <div class="font-mono text-xs text-stone/70">Joinery</div>
-                <div class="mt-1 text-sm text-stone/90">Custom modular cabinetry</div>
+                <div class="mt-1 text-sm text-stone/90">Modular cabinetry</div>
               </div>
             </div>
           </article>
@@ -480,129 +521,227 @@
       </div>
     </section>
 
-    <!-- PROJECTS ANCHOR (for CTA) -->
-    <section id="projects" class="py-16">
-      <div class="mx-auto max-w-7xl px-5">
-        <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft">
-          <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <div class="font-mono text-xs text-gold/90">MASTERPIECES</div>
-              <h2 class="mt-3 font-display text-3xl text-stone">A gallery built on proof, not promises.</h2>
-              <p class="mt-3 max-w-2xl text-sm leading-relaxed text-stone/75">
-                Replace this section with your projects grid + before/after sliders. Keep the “render vs reality” split as a signature.
-              </p>
+    <!-- PORTFOLIO (placeholder grid + better responsive) -->
+    <section id="portfolio" class="py-20 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-5">
+        <div class="reveal flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+              <span>PORTFOLIO</span>
             </div>
-            <a href="#consultation" class="focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
-              Request a Turnkey Consultation
-            </a>
+            <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
+              View Our Masterpieces
+            </h2>
+            <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
+              Replace these cards with your real projects and add a Render vs Reality slider on the project detail page.
+            </p>
           </div>
+
+          <a href="#contact" class="focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
+            Start Your Project
+          </a>
+        </div>
+
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Card template -->
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 overflow-hidden shadow-soft">
+            <div class="aspect-[16/10] bg-black/20 relative">
+              <img class="h-full w-full object-cover opacity-90"
+                   src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=70"
+                   alt="Luxury residence placeholder">
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/10 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <div class="font-mono text-xs text-stone/65">Residential Villa</div>
+              <h3 class="mt-2 font-display text-xl text-stone">Sunlit Courtyard Residence</h3>
+              <p class="mt-2 text-sm text-stone/75">BIM-led design-build with daylight-first planning and disciplined BOQ control.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">BIM</span>
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">Turnkey</span>
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">Biophilic</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 overflow-hidden shadow-soft">
+            <div class="aspect-[16/10] bg-black/20 relative">
+              <img class="h-full w-full object-cover opacity-90"
+                   src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=70"
+                   alt="Commercial landmark placeholder">
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/10 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <div class="font-mono text-xs text-stone/65">Commercial Landmark</div>
+              <h3 class="mt-2 font-display text-xl text-stone">Glass & Stone Tower</h3>
+              <p class="mt-2 text-sm text-stone/75">Structural logic meets elegant form—engineered for longevity and auditability.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">MEP</span>
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">Audit Logs</span>
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">Grade-60</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 overflow-hidden shadow-soft">
+            <div class="aspect-[16/10] bg-black/20 relative">
+              <img class="h-full w-full object-cover opacity-90"
+                   src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1600&q=70"
+                   alt="Interior architecture placeholder">
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/10 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <div class="font-mono text-xs text-stone/65">Luxury Interiors</div>
+              <h3 class="mt-2 font-display text-xl text-stone">Anthropocentric Living Space</h3>
+              <p class="mt-2 text-sm text-stone/75">Light, acoustics, and texture tuned—smart scenes, custom cabinetry, stone finishes.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">Smart Lighting</span>
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">Joinery</span>
+                <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 font-mono text-xs text-stone/70">Stone</span>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- NUMBERS -->
-    <section id="numbers" class="py-20 sm:py-24 bg-black/10">
-      <div class="mx-auto max-w-7xl px-5">
+    <!-- PROCESS -->
+    <section id="process" class="py-20 sm:py-24 bg-black/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-5">
         <div class="reveal">
           <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
             <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
-            <span>GRIHOGORI BY THE NUMBERS</span>
+            <span>OUR PROCESS</span>
           </div>
           <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
-            Authority, Quantified.
+            The calm comes from disciplined sequencing.
           </h2>
           <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
-            Numbers should not decorate a brand—they should validate it.
+            A premium build is not rushed—it’s orchestrated. Below is a clean, client-friendly sequence you can later expand into an interactive tracker.
           </p>
         </div>
 
-        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <!-- Counter cards -->
-          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
-            <div class="font-mono text-xs text-stone/70">Projects Under Management</div>
-            <div class="mt-3 font-display text-4xl text-stone">
-              <span class="count" data-target="32">0</span><span class="text-gold">+</span>
-            </div>
+        <div class="mt-10 grid gap-6 lg:grid-cols-4">
+          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">01</div>
+            <h3 class="mt-3 font-display text-xl text-stone">Discovery</h3>
+            <p class="mt-2 text-sm text-stone/75">Requirements, site context, budget clarity, and success criteria.</p>
           </div>
-
-          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
-            <div class="font-mono text-xs text-stone/70">Structural Safety Record</div>
-            <div class="mt-3 font-display text-4xl text-stone">
-              <span class="count" data-target="100">0</span><span class="text-gold">%</span>
-            </div>
+          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">02</div>
+            <h3 class="mt-3 font-display text-xl text-stone">Design + BIM</h3>
+            <p class="mt-2 text-sm text-stone/75">3D, VR, clash detection, and structural feasibility baked in.</p>
           </div>
-
-          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
-            <div class="font-mono text-xs text-stone/70">Post-Handover Support</div>
-            <div class="mt-3 font-display text-4xl text-stone">
-              <span class="count" data-target="12">0</span> <span class="text-base font-mono text-stone/70">Months</span>
-            </div>
+          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">03</div>
+            <h3 class="mt-3 font-display text-xl text-stone">Turnkey BOQ</h3>
+            <p class="mt-2 text-sm text-stone/75">Line-item BOQ, procurement plan, timeline, and accountability.</p>
           </div>
-
-          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
-            <div class="font-mono text-xs text-stone/70">Budget Overruns in 2025</div>
-            <div class="mt-3 font-display text-4xl text-stone">
-              <span class="count" data-target="0">0</span>
-            </div>
+          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">04</div>
+            <h3 class="mt-3 font-display text-xl text-stone">Master Build</h3>
+            <p class="mt-2 text-sm text-stone/75">Daily logs, audits, quality proof—delivered with precision.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PROMISE -->
-    <section id="promise" class="py-20 sm:py-24">
-      <div class="mx-auto max-w-7xl px-5">
-        <div class="reveal rounded-[28px] border border-white/10 bg-white/5 p-10 shadow-soft relative overflow-hidden">
-          <!-- Subtle gold glow -->
-          <div class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-gold/15 blur-3xl"></div>
-          <div class="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-gold/10 blur-3xl"></div>
-
-          <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
-            <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
-            <span>THE 2026 PROMISE</span>
+    <!-- INSIGHTS (lightweight placeholder) -->
+    <section id="insights" class="py-20 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-5">
+        <div class="reveal flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+              <span>INSIGHTS</span>
+            </div>
+            <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
+              Engineering wisdom for modern living.
+            </h2>
+            <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
+              Add articles here later (BOQ guides, material grades, MEP planning, waterproofing, foundation QA).
+            </p>
           </div>
+          <a href="#contact" class="focus-ring inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-stone hover:bg-white/10 transition">
+            Subscribe / Contact
+          </a>
+        </div>
 
-          <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
-            Integrity should never be hidden behind plaster.
-          </h2>
-
-          <blockquote class="mt-6 max-w-4xl border-l-2 border-gold/60 pl-6 text-base leading-relaxed text-stone/80">
-            “In an industry of shortcuts, we choose the long road of perfection. We believe that your home's integrity shouldn't be a mystery hidden behind plaster.
-            We invite you to see the steel, review the data, and witness the honesty of our craft.”
-            <footer class="mt-4 font-mono text-sm text-stone/70">— The GrihoGori Collective</footer>
-          </blockquote>
-
-          <div class="mt-10 flex flex-col gap-3 sm:flex-row">
-            <a href="#consultation" class="focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
-              Request a Turnkey Consultation
-            </a>
-            <a href="#top" class="focus-ring inline-flex items-center justify-center rounded-2xl border border-white/12 bg-white/5 px-6 py-3 text-sm font-semibold text-stone hover:bg-white/10 transition">
-              Back to Top
-            </a>
-          </div>
+        <div class="mt-10 grid gap-6 lg:grid-cols-3">
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">BOQ</div>
+            <h3 class="mt-2 font-display text-xl text-stone">How to read a BOQ like an owner</h3>
+            <p class="mt-2 text-sm text-stone/75">Understand hidden costs and prevent the “mistake tax” before it starts.</p>
+          </article>
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">STRUCTURE</div>
+            <h3 class="mt-2 font-display text-xl text-stone">Grade-60 rebar: where it matters most</h3>
+            <p class="mt-2 text-sm text-stone/75">Columns, beams, lap lengths, and audit checkpoints that protect longevity.</p>
+          </article>
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">MEP</div>
+            <h3 class="mt-2 font-display text-xl text-stone">MEP planning before plaster</h3>
+            <p class="mt-2 text-sm text-stone/75">Because what’s concealed is the true signature of quality.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- CONSULTATION (CTA block / anchor target) -->
-    <section id="consultation" class="py-16 bg-black/10">
-      <div class="mx-auto max-w-7xl px-5">
-        <div class="reveal grid gap-8 lg:grid-cols-12 items-start">
-          <div class="lg:col-span-6">
-            <div class="font-mono text-xs text-gold/90">TURNKEY CONSULTATION</div>
-            <h2 class="mt-4 font-display text-3xl text-stone">Request a consultation built on clarity.</h2>
+    <!-- CONTACT + NUMBERS + PROMISE (your original content retained, improved layout) -->
+    <section id="contact" class="py-20 sm:py-24 bg-black/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-5">
+        <div class="reveal grid gap-10 lg:grid-cols-12 items-start">
+          <div class="lg:col-span-5">
+            <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+              <span>REQUEST A TURNKEY CONSULTATION</span>
+            </div>
+
+            <h2 class="mt-4 font-display text-3xl text-stone sm:text-4xl">Start with facts. Build with certainty.</h2>
             <p class="mt-4 text-sm leading-relaxed text-stone/75">
-              No marketing loops. Share your project fundamentals, and we’ll respond with an engineered next step.
+              No marketing loops. Share your fundamentals—plot, location, budget, timeline—and we respond with an engineered next step.
             </p>
 
-            <div class="mt-6 rounded-3xl border border-white/10 bg-white/5 p-6">
-              <div class="font-mono text-xs text-stone/70">Clarity begins before construction:</div>
-              <div class="mt-2 font-mono text-sm text-stone/90">Deliverables → Concept + BOQ + Timeline + Execution Method</div>
+            <!-- Numbers (fixed: stable animation + no layout shift) -->
+            <div class="mt-8 grid gap-4 sm:grid-cols-2">
+              <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+                <div class="font-mono text-xs text-stone/70">Projects Under Management</div>
+                <div class="mt-3 font-display text-4xl text-stone tabular-nums">
+                  <span class="count" data-target="32">0</span><span class="text-gold">+</span>
+                </div>
+              </div>
+              <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+                <div class="font-mono text-xs text-stone/70">Structural Safety Record</div>
+                <div class="mt-3 font-display text-4xl text-stone tabular-nums">
+                  <span class="count" data-target="100">0</span><span class="text-gold">%</span>
+                </div>
+              </div>
+              <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+                <div class="font-mono text-xs text-stone/70">Post-Handover Support</div>
+                <div class="mt-3 font-display text-4xl text-stone tabular-nums">
+                  <span class="count" data-target="12">0</span> <span class="text-base font-mono text-stone/70">Months</span>
+                </div>
+              </div>
+              <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+                <div class="font-mono text-xs text-stone/70">Budget Overruns in 2025</div>
+                <div class="mt-3 font-display text-4xl text-stone tabular-nums">
+                  <span class="count" data-target="0">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+              <div class="font-mono text-xs text-gold/90">THE 2026 PROMISE</div>
+              <p class="mt-3 text-sm leading-relaxed text-stone/80">
+                “In an industry of shortcuts, we choose the long road of perfection. We believe that your home's integrity shouldn't be a mystery hidden behind plaster.
+                We invite you to see the steel, review the data, and witness the honesty of our craft.”
+              </p>
+              <div class="mt-3 font-mono text-xs text-stone/60">— The GrihoGori Collective</div>
             </div>
           </div>
 
-          <div class="lg:col-span-6">
-            <form class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+          <div class="lg:col-span-7">
+            <form class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft2">
               <div class="grid gap-4 sm:grid-cols-2">
                 <label class="grid gap-2">
                   <span class="font-mono text-xs text-stone/70">Name</span>
@@ -613,6 +752,22 @@
                   <span class="font-mono text-xs text-stone/70">Phone / WhatsApp</span>
                   <input class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
                     placeholder="+880 ..." />
+                </label>
+
+                <label class="grid gap-2">
+                  <span class="font-mono text-xs text-stone/70">Email (optional)</span>
+                  <input type="email" class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                    placeholder="you@email.com" />
+                </label>
+
+                <label class="grid gap-2">
+                  <span class="font-mono text-xs text-stone/70">Project Type</span>
+                  <select class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone">
+                    <option>Residential Villa</option>
+                    <option>Commercial Landmark</option>
+                    <option>Luxury Interiors</option>
+                    <option>Renovation</option>
+                  </select>
                 </label>
 
                 <label class="grid gap-2">
@@ -642,33 +797,99 @@
 
               <label class="mt-4 grid gap-2">
                 <span class="font-mono text-xs text-stone/70">Project Notes</span>
-                <textarea rows="4" class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
-                  placeholder="Villa / commercial / interior, number of floors, must-have features..."></textarea>
+                <textarea rows="5" class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                  placeholder="Floors, must-have features, style references, special requirements..."></textarea>
               </label>
 
-              <button type="button" class="mt-5 w-full focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
-                Submit Request
-              </button>
-
-              <p class="mt-4 text-xs text-stone/55">
-                Note: This is a UI form layout. Connect it to your backend (Email/CRM/Google Sheet) when integrating.
-              </p>
+              <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <button type="button" class="w-full sm:w-auto focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-7 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
+                  Submit Request
+                </button>
+                <p class="text-xs text-stone/55">
+                  Connect to Email/CRM/Google Sheet later. This is a clean front-end layout.
+                </p>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-white/10 py-10">
-      <div class="mx-auto max-w-7xl px-5">
-        <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div class="font-display text-lg text-stone">GrihoGori</div>
-            <div class="mt-1 text-sm text-stone/60">Design. Build. Live.</div>
+    <!-- FOOTER (fixed: premium + responsive + not simple) -->
+    <footer class="border-t border-white/10 bg-[#0f1f2d]">
+      <div class="mx-auto max-w-7xl px-4 sm:px-5 py-12">
+        <div class="grid gap-10 lg:grid-cols-12">
+          <div class="lg:col-span-5">
+            <div class="flex items-center gap-3">
+              <div>
+                <div class="font-display text-xl text-stone">GrihoGori</div>
+                <div class="text-sm text-stone/60">Design. Build. Live.</div>
+              </div>
+            </div>
+
+            <p class="mt-4 max-w-md text-sm leading-relaxed text-stone/70">
+              A multidisciplinary design-build studio where architectural poetry meets precision engineering.
+              We practice Subsurface Honesty—because what is hidden defines what endures.
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-stone/70">BOQ</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-stone/70">BIM</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-stone/70">MEP</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-stone/70">Grade-60</span>
+            </div>
           </div>
-          <div class="text-sm text-stone/60">
-            © <span id="year"></span> GrihoGori. Subsurface Honesty.
+
+          <div class="lg:col-span-7">
+            <div class="grid gap-8 sm:grid-cols-3">
+              <div>
+                <div class="font-mono text-xs text-gold/90">NAVIGATION</div>
+                <ul class="mt-4 grid gap-2 text-sm text-stone/70">
+                  <li><a class="hover:text-stone focus-ring rounded-lg" href="#top">Homepage</a></li>
+                  <li><a class="hover:text-stone focus-ring rounded-lg" href="#about">About Us</a></li>
+                  <li><a class="hover:text-stone focus-ring rounded-lg" href="#services">Services</a></li>
+                  <li><a class="hover:text-stone focus-ring rounded-lg" href="#portfolio">Portfolio</a></li>
+                  <li><a class="hover:text-stone focus-ring rounded-lg" href="#process">Our Process</a></li>
+                  <li><a class="hover:text-stone focus-ring rounded-lg" href="#insights">Insights</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <div class="font-mono text-xs text-gold/90">CONTACT</div>
+                <ul class="mt-4 grid gap-2 text-sm text-stone/70">
+                  <li><span class="text-stone/55">Phone:</span> +880 XXXXX-XXXXX</li>
+                  <li><span class="text-stone/55">Email:</span> hello@grihogori.com</li>
+                  <li><span class="text-stone/55">Office:</span> Dhaka, Bangladesh</li>
+                </ul>
+                <p class="mt-4 text-xs text-stone/55">
+                  Replace contact details with real business info.
+                </p>
+              </div>
+
+              <div>
+                <div class="font-mono text-xs text-gold/90">GET UPDATES</div>
+                <p class="mt-4 text-sm text-stone/70">
+                  Monthly insights on BOQ discipline, materials, and build quality—no spam.
+                </p>
+                <div class="mt-4 flex gap-2">
+                  <input class="w-full focus-ring rounded-2xl border border-white/10 bg-black/25 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                         placeholder="Email address" />
+                  <button class="focus-ring rounded-2xl bg-gold px-4 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
+                    Join
+                  </button>
+                </div>
+                <p class="mt-3 text-xs text-stone/55">By subscribing, you agree to receive emails from GrihoGori.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div class="text-xs text-stone/55">
+            © <span id="year"></span> GrihoGori. All rights reserved.
+          </div>
+          <div class="text-xs text-stone/55">
+            Brand Promise: <span class="text-stone">Design. Build. Live.</span>
           </div>
         </div>
       </div>
@@ -676,32 +897,79 @@
   </main>
 
   <script>
-    // Header shrink on scroll
+    // --- LOADER (fix: hide reliably, never stuck) ---
+    const loader = document.getElementById('pageLoader');
+
+    const hideLoader = () => {
+      if (!loader) return;
+      loader.classList.add('is-hidden');
+      loader.setAttribute('aria-hidden', 'true');
+      // Optional: remove from DOM after transition
+      setTimeout(() => loader.remove(), 450);
+    };
+
+    // Hide when page fully loaded; also fallback timeout
+    window.addEventListener('load', hideLoader);
+    setTimeout(hideLoader, 2400);
+
+    // --- HEADER SHRINK ---
     const header = document.getElementById('siteHeader');
     const onScroll = () => {
-      if (window.scrollY > 18) header.classList.add('shrink');
+      if (!header) return;
+      if (window.scrollY > 16) header.classList.add('shrink');
       else header.classList.remove('shrink');
     };
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Mobile menu
+    // --- MOBILE MENU (fix: animation + close on outside + ESC) ---
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
-    menuBtn?.addEventListener('click', () => {
-      const isOpen = !mobileNav.classList.contains('hidden');
-      mobileNav.classList.toggle('hidden');
-      menuBtn.setAttribute('aria-expanded', String(!isOpen));
-    });
-    // Close mobile nav when clicking a link
+    const mobilePanel = document.getElementById('mobilePanel');
+
+    const openMobile = () => {
+      mobileNav.classList.remove('hidden');
+      requestAnimationFrame(() => mobilePanel.classList.add('open'));
+      menuBtn.setAttribute('aria-expanded', 'true');
+      document.addEventListener('click', onDocClick);
+      document.addEventListener('keydown', onEsc);
+    };
+
+    const closeMobile = () => {
+      mobilePanel.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      setTimeout(() => mobileNav.classList.add('hidden'), 180);
+      document.removeEventListener('click', onDocClick);
+      document.removeEventListener('keydown', onEsc);
+    };
+
+    const toggleMobile = (e) => {
+      e.stopPropagation();
+      const isOpen = menuBtn.getAttribute('aria-expanded') === 'true';
+      if (isOpen) closeMobile();
+      else openMobile();
+    };
+
+    const onDocClick = (e) => {
+      if (!mobileNav || mobileNav.classList.contains('hidden')) return;
+      const inside = mobileNav.contains(e.target) || menuBtn.contains(e.target);
+      if (!inside) closeMobile();
+    };
+
+    const onEsc = (e) => {
+      if (e.key === 'Escape') closeMobile();
+    };
+
+    menuBtn?.addEventListener('click', toggleMobile);
+
+    // Close when clicking links
     mobileNav?.addEventListener('click', (e) => {
       const a = e.target.closest('a');
       if (!a) return;
-      mobileNav.classList.add('hidden');
-      menuBtn.setAttribute('aria-expanded', 'false');
+      closeMobile();
     });
 
-    // Reveal on scroll (IntersectionObserver)
+    // --- REVEAL ON SCROLL (fix: consistent + lightweight) ---
     const revealEls = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -710,18 +978,18 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => io.observe(el));
 
-    // Counters (animate once when visible)
+    // --- COUNTERS (fix: triggers once, no jump) ---
     const counters = document.querySelectorAll('.count');
     const animateCounter = (el) => {
       const target = Number(el.getAttribute('data-target') || '0');
-      const isPercent = el.nextElementSibling && el.nextElementSibling.textContent.includes('%');
       const duration = 900;
       const start = performance.now();
       const from = 0;
 
       const tick = (t) => {
         const p = Math.min((t - start) / duration, 1);
-        const value = Math.floor(from + (target - from) * (1 - Math.pow(1 - p, 3)));
+        const eased = 1 - Math.pow(1 - p, 3);
+        const value = Math.round(from + (target - from) * eased);
         el.textContent = String(value);
         if (p < 1) requestAnimationFrame(tick);
         else el.textContent = String(target);
@@ -737,7 +1005,7 @@
         el.dataset.done = '1';
         animateCounter(el);
       });
-    }, { threshold: 0.6 });
+    }, { threshold: 0.65 });
 
     counters.forEach(c => counterIO.observe(c));
 
