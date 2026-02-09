@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GrihoGori — Design. Build. Live.</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            sans: ['Montserrat', 'ui-sans-serif', 'system-ui'],
+            mono: ['"Roboto Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+          },
+          colors: {
+            navy: '#1A2B3C',     // Midnight Navy
+            gold: '#C5A059',     // Structural Gold
+            stone: '#E5E5E5',    // Architectural Stone
+            charcoal: '#333333', // Slate Charcoal
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(0,0,0,.18)',
+            line: '0 1px 0 rgba(255,255,255,.08)',
+          },
+          keyframes: {
+            floaty: {
+              '0%,100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' }
+            },
+            draw: {
+              '0%': { strokeDashoffset: '240' },
+              '100%': { strokeDashoffset: '0' }
+            }
+          },
+          animation: {
+            floaty: 'floaty 6s ease-in-out infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --navy:#1A2B3C;
+      --gold:#C5A059;
+      --stone:#E5E5E5;
+      --charcoal:#333333;
+    }
+
+    /* Premium selection */
+    ::selection{ background: rgba(197,160,89,.35); }
+
+    /* Subtle “blueprint” grid */
+    .blueprint-grid{
+      background-image:
+        linear-gradient(to right, rgba(197,160,89,.10) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(197,160,89,.10) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(circle at 30% 20%, rgba(0,0,0,1), rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 75%);
+      -webkit-mask-image: radial-gradient(circle at 30% 20%, rgba(0,0,0,1), rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 75%);
+    }
+
+    /* Fade-in on scroll */
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.is-visible{ opacity:1; transform: translateY(0); }
+
+    /* Glass header */
+    .glass{
+      background: rgba(26,43,60,.62);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .glass.shrink{
+      background: rgba(26,43,60,.72);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    /* Video overlay */
+    .hero-overlay{
+      background:
+        radial-gradient(80% 60% at 30% 35%, rgba(197,160,89,.18), rgba(197,160,89,0) 60%),
+        linear-gradient(180deg, rgba(26,43,60,.78), rgba(26,43,60,.62) 45%, rgba(26,43,60,.86));
+    }
+
+    /* Underline hover */
+    .navlink{
+      position: relative;
+    }
+    .navlink:after{
+      content:'';
+      position:absolute;
+      left:0; bottom:-8px;
+      width:0%;
+      height:1px;
+      background: rgba(197,160,89,.9);
+      transition: width .25s ease;
+    }
+    .navlink:hover:after{ width:100%; }
+
+    /* Button focus */
+    .focus-ring:focus-visible{
+      outline: 2px solid rgba(197,160,89,.9);
+      outline-offset: 3px;
+    }
+
+    /* Mono callout chip */
+    .chip{
+      border: 1px solid rgba(197,160,89,.28);
+      background: rgba(229,229,229,.06);
+    }
+
+    /* SVG line draw */
+    .drawline{
+      stroke-dasharray: 240;
+      stroke-dashoffset: 240;
+    }
+    .is-visible .drawline{
+      animation: draw 1.3s ease forwards .2s;
+    }
+  </style>
+</head>
+
+<body class="bg-navy text-stone font-sans antialiased">
+  <!-- Header -->
+  <header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 glass transition-all duration-300">
+    <div class="mx-auto max-w-7xl px-5">
+      <div class="flex h-20 items-center justify-between gap-4">
+        <!-- Logo -->
+        <a href="#top" class="flex items-center gap-3 focus-ring rounded-lg">
+          <div class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5">
+            <!-- Minimal “G” mark -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 12a8 8 0 1 1-2.35-5.65" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M20 12h-6" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="leading-tight">
+            <div class="font-display text-lg tracking-wide text-stone">GrihoGori</div>
+            <div class="text-xs text-stone/70">Design. Build. Live.</div>
+          </div>
+        </a>
+
+        <!-- Nav -->
+        <nav class="hidden lg:flex items-center gap-7 text-sm text-stone/85">
+          <a class="navlink focus-ring rounded-md" href="#difference">Difference</a>
+          <a class="navlink focus-ring rounded-md" href="#pillars">Pillars</a>
+          <a class="navlink focus-ring rounded-md" href="#numbers">By the Numbers</a>
+          <a class="navlink focus-ring rounded-md" href="#promise">2026 Promise</a>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+          <a href="#projects" class="hidden sm:inline-flex focus-ring items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-stone/90 hover:bg-white/10 transition">
+            View Our Masterpieces
+          </a>
+          <a href="#consultation" class="focus-ring inline-flex items-center justify-center rounded-xl bg-gold px-4 py-2 text-sm font-semibold text-navy hover:opacity-95 transition">
+            Request a Turnkey Consultation
+          </a>
+
+          <!-- Mobile menu button -->
+          <button id="menuBtn" class="lg:hidden focus-ring inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition" aria-label="Open menu" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke="rgba(229,229,229,.9)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile nav -->
+      <div id="mobileNav" class="lg:hidden hidden pb-5">
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+          <div class="grid gap-3 text-sm text-stone/85">
+            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#difference">Difference</a>
+            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#pillars">Pillars</a>
+            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#numbers">By the Numbers</a>
+            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#promise">2026 Promise</a>
+            <a class="focus-ring rounded-md px-2 py-2 hover:bg-white/5" href="#projects">View Our Masterpieces</a>
+            <a class="focus-ring rounded-md px-2 py-2 bg-gold text-navy font-semibold" href="#consultation">Request a Turnkey Consultation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="relative min-h-[92vh] pt-28">
+      <!-- Background video -->
+      <video
+        class="absolute inset-0 h-full w-full object-cover"
+        autoplay muted loop playsinline
+        poster="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2000&q=70">
+        <!-- Replace with your actual cinematic BIM-to-finished video -->
+        <source src="https://cdn.coverr.co/videos/coverr-construction-site-1571/1080p.mp4" type="video/mp4" />
+      </video>
+
+      <!-- Overlay -->
+      <div class="absolute inset-0 hero-overlay"></div>
+
+      <!-- Blueprint grid -->
+      <div class="pointer-events-none absolute inset-0 blueprint-grid opacity-60"></div>
+
+      <!-- Content -->
+      <div class="relative mx-auto max-w-7xl px-5">
+        <div class="grid gap-10 lg:grid-cols-12 items-center">
+          <div class="lg:col-span-7">
+            <div class="reveal">
+              <div class="inline-flex items-center gap-2 rounded-full px-4 py-2 chip font-mono text-xs text-stone/80">
+                <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+                <span>Subsurface Honesty • Absolute Transparency</span>
+              </div>
+
+              <h1 class="mt-6 font-display text-4xl leading-[1.05] tracking-tight text-stone sm:text-5xl lg:text-6xl">
+                Your Legacy, Engineered.<br class="hidden sm:block" />
+                Your Vision, Realized.
+              </h1>
+
+              <p class="mt-5 max-w-2xl text-base leading-relaxed text-stone/80 sm:text-lg">
+                GrihoGori is a multidisciplinary design-build studio where architectural poetry meets the unyielding
+                logic of precision engineering. Specializing in high-end residential villas, commercial landmarks,
+                and turnkey luxury interiors, we redefine the standard of modern living through <span class="text-stone">Subsurface Honesty</span> and
+                absolute transparency.
+              </p>
+
+              <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <a href="#projects" class="focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
+                  View Our Masterpieces
+                </a>
+                <a href="#consultation" class="focus-ring inline-flex items-center justify-center rounded-2xl border border-white/12 bg-white/5 px-6 py-3 text-sm font-semibold text-stone hover:bg-white/10 transition">
+                  Request a Turnkey Consultation
+                </a>
+              </div>
+
+              <!-- Technical callouts -->
+              <div class="mt-10 grid gap-3 sm:grid-cols-3">
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div class="font-mono text-xs text-stone/70">BOQ Discipline</div>
+                  <div class="mt-1 text-sm text-stone/90">Line-item clarity, zero ambiguity.</div>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div class="font-mono text-xs text-stone/70">Grade-Certified Build</div>
+                  <div class="mt-1 text-sm text-stone/90">Grade-60 rebar, M-25 concrete.</div>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div class="font-mono text-xs text-stone/70">BIM Digital Twin</div>
+                  <div class="mt-1 text-sm text-stone/90">Clash-free execution on site.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right “legacy card” -->
+          <div class="lg:col-span-5">
+            <div class="reveal lg:justify-self-end">
+              <div class="rounded-3xl border border-white/10 bg-black/25 p-6 shadow-soft">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <div class="font-display text-xl text-stone">The Master Builder Tradition</div>
+                    <p class="mt-2 text-sm leading-relaxed text-stone/75">
+                      One studio. One accountable team. From concept to keys—engineered with precision, delivered with calm.
+                    </p>
+                  </div>
+                  <div class="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-white/5 animate-floaty">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M4 20V8l8-4 8 4v12" stroke="rgba(229,229,229,.9)" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M9 20v-8h6v8" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Mini “equation” -->
+                <div class="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div class="font-mono text-xs text-stone/70">Integrity is measurable:</div>
+                  <div class="mt-2 font-mono text-sm text-stone/90">
+                    Quality = (Material Grade) × (Audit Frequency) × (Documentation)
+                  </div>
+                </div>
+
+                <!-- Scrolldown cue -->
+                <a href="#difference" class="mt-6 inline-flex items-center gap-2 text-sm text-stone/75 hover:text-stone transition focus-ring rounded-lg">
+                  <span>Explore the Difference</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 5v14" stroke="rgba(229,229,229,.8)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M7 14l5 5 5-5" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+
+              <!-- Little label -->
+              <div class="mt-4 text-xs text-stone/55">
+                Visual suggestion: Replace this video with your BIM → finished cinematic transition.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIFFERENCE -->
+    <section id="difference" class="relative py-20 sm:py-24">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="reveal">
+          <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+            <span>ONE TEAM. ONE VISION. ZERO STRESS.</span>
+          </div>
+          <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
+            The GrihoGori Difference
+          </h2>
+          <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
+            Traditional construction is often a battleground. You are caught between an Architect who dreams beyond your budget and a Contractor who simplifies your design for their own convenience.
+            This fragmentation leads to <span class="text-stone">the mistake tax</span>—unnecessary delays, budget overruns, and compromised structural quality.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-3">
+          <!-- Unified Accountability -->
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="flex items-center gap-3">
+              <div class="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-black/20">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2l9 4-9 4-9-4 9-4Z" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M3 10l9 4 9-4" stroke="rgba(229,229,229,.85)" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M3 14l9 4 9-4" stroke="rgba(229,229,229,.6)" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="font-display text-xl text-stone">Unified Accountability</h3>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-stone/75">
+              We own the friction so you can enjoy the flow. From the first conceptual sketch to the final brick laid,
+              our architects and engineers work at the same table.
+            </p>
+            <div class="mt-5 font-mono text-xs text-stone/70">
+              Output: <span class="text-stone/90">Single point of responsibility</span>
+            </div>
+          </article>
+
+          <!-- Digital Twin -->
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="flex items-center gap-3">
+              <div class="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-black/20">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path class="drawline" d="M4 7h16M4 12h10M4 17h16" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M18 10l2 2-6 6H12v-2l6-6Z" stroke="rgba(229,229,229,.85)" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="font-display text-xl text-stone">Digital-Twin Accuracy</h3>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-stone/75">
+              We build your home twice—first in a high-fidelity digital environment (BIM) to detect clashes,
+              and then on your land with surgical precision.
+            </p>
+            <div class="mt-5 font-mono text-xs text-stone/70">
+              Method: <span class="text-stone/90">BIM clash detection</span>
+            </div>
+          </article>
+
+          <!-- Price Certainty -->
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="flex items-center gap-3">
+              <div class="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-black/20">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2v20" stroke="rgba(229,229,229,.7)" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M17 7a5 5 0 0 0-5-2c-2.2 0-4 1.1-4 3s2 3 4 3 4 1 4 3-1.8 3-4 3a5 5 0 0 1-5-2" stroke="rgba(197,160,89,.95)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3 class="font-display text-xl text-stone">Price Certainty</h3>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-stone/75">
+              Our Turnkey approach means no “surprise” invoices. We provide cost-certainty in a volatile market
+              by managing the entire supply chain for you.
+            </p>
+            <div class="mt-5 font-mono text-xs text-stone/70">
+              Deliverable: <span class="text-stone/90">Turnkey BOQ + controlled procurement</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PILLARS -->
+    <section id="pillars" class="py-20 sm:py-24 bg-black/10">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="reveal">
+          <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+            <span>THE THREE PILLARS OF EXCELLENCE</span>
+          </div>
+          <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
+            Architecture. Engineering. Interior Craft.
+          </h2>
+          <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
+            High-end living is never accidental. It is curated in drawings, proven in steel, and felt in the quiet confidence of a finished space.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-3">
+          <!-- Pillar 1 -->
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h3 class="font-display text-2xl text-stone">I. Visionary Architecture & Master Planning</h3>
+                <p class="mt-3 text-sm leading-relaxed text-stone/75">
+                  We design buildings that are landmarks, not just addresses. We don't just draft floor plans; we curate environments.
+                  Our designs are optimized for <span class="text-stone">Biophilic Harmony</span>—maximizing natural light, airflow, and solar orientation.
+                  Utilizing advanced 3D visualizations and VR walkthroughs, we ensure you “live” in your home before ground is broken.
+                  Every line we draw is backed by structural feasibility.
+                </p>
+              </div>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="chip rounded-full px-3 py-1 font-mono text-xs text-stone/75">Master Planning</span>
+              <span class="chip rounded-full px-3 py-1 font-mono text-xs text-stone/75">VR Walkthrough</span>
+              <span class="chip rounded-full px-3 py-1 font-mono text-xs text-stone/75">Solar Orientation</span>
+            </div>
+          </article>
+
+          <!-- Pillar 2 -->
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft">
+            <h3 class="font-display text-2xl text-stone">II. High-Performance Construction (The Master Build)</h3>
+            <p class="mt-3 text-sm leading-relaxed text-stone/75">
+              Engineering with “Subsurface Honesty.” Construction is an act of trust. We honor that trust by prioritizing what is hidden.
+              Our builds utilize <span class="text-stone">Grade-60 Deformed Steel</span> and <span class="text-stone">M-25 certified concrete</span>,
+              specifically engineered to withstand long-term environmental stress and seismic cycles.
+              We prove our quality through daily digital logs and rigorous structural audits, ensuring a foundation that outlasts generations.
+            </p>
+
+            <div class="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div class="font-mono text-xs text-stone/70">Technical Snapshot</div>
+              <div class="mt-2 grid gap-2 text-sm">
+                <div class="flex items-center justify-between gap-4">
+                  <span class="text-stone/75">Rebar</span>
+                  <span class="font-mono text-stone/90">Grade-60</span>
+                </div>
+                <div class="flex items-center justify-between gap-4">
+                  <span class="text-stone/75">Concrete</span>
+                  <span class="font-mono text-stone/90">M-25</span>
+                </div>
+                <div class="flex items-center justify-between gap-4">
+                  <span class="text-stone/75">Audit Logs</span>
+                  <span class="font-mono text-stone/90">Daily</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Pillar 3 -->
+          <article class="reveal rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft">
+            <h3 class="font-display text-2xl text-stone">III. Bespoke Interior Architecture</h3>
+            <p class="mt-3 text-sm leading-relaxed text-stone/75">
+              Soulful spaces, anthropocentric design. A GrihoGori interior is a sensory experience.
+              We go beyond “decorating” to perform true Interior Architecture. We focus on how light, sound, and texture impact your well-being.
+              From AI-integrated smart lighting to custom modular cabinetry and handcrafted stone finishes, we create interiors that are a seamless extension of your personality.
+            </p>
+
+            <div class="mt-6 grid gap-3 sm:grid-cols-2">
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div class="font-mono text-xs text-stone/70">Lighting</div>
+                <div class="mt-1 text-sm text-stone/90">AI-integrated scenes</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div class="font-mono text-xs text-stone/70">Joinery</div>
+                <div class="mt-1 text-sm text-stone/90">Custom modular cabinetry</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS ANCHOR (for CTA) -->
+    <section id="projects" class="py-16">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-8 shadow-soft">
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <div class="font-mono text-xs text-gold/90">MASTERPIECES</div>
+              <h2 class="mt-3 font-display text-3xl text-stone">A gallery built on proof, not promises.</h2>
+              <p class="mt-3 max-w-2xl text-sm leading-relaxed text-stone/75">
+                Replace this section with your projects grid + before/after sliders. Keep the “render vs reality” split as a signature.
+              </p>
+            </div>
+            <a href="#consultation" class="focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
+              Request a Turnkey Consultation
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NUMBERS -->
+    <section id="numbers" class="py-20 sm:py-24 bg-black/10">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="reveal">
+          <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+            <span>GRIHOGORI BY THE NUMBERS</span>
+          </div>
+          <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
+            Authority, Quantified.
+          </h2>
+          <p class="mt-4 max-w-3xl text-base leading-relaxed text-stone/75">
+            Numbers should not decorate a brand—they should validate it.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Counter cards -->
+          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">Projects Under Management</div>
+            <div class="mt-3 font-display text-4xl text-stone">
+              <span class="count" data-target="32">0</span><span class="text-gold">+</span>
+            </div>
+          </div>
+
+          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">Structural Safety Record</div>
+            <div class="mt-3 font-display text-4xl text-stone">
+              <span class="count" data-target="100">0</span><span class="text-gold">%</span>
+            </div>
+          </div>
+
+          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">Post-Handover Support</div>
+            <div class="mt-3 font-display text-4xl text-stone">
+              <span class="count" data-target="12">0</span> <span class="text-base font-mono text-stone/70">Months</span>
+            </div>
+          </div>
+
+          <div class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+            <div class="font-mono text-xs text-stone/70">Budget Overruns in 2025</div>
+            <div class="mt-3 font-display text-4xl text-stone">
+              <span class="count" data-target="0">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROMISE -->
+    <section id="promise" class="py-20 sm:py-24">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="reveal rounded-[28px] border border-white/10 bg-white/5 p-10 shadow-soft relative overflow-hidden">
+          <!-- Subtle gold glow -->
+          <div class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-gold/15 blur-3xl"></div>
+          <div class="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-gold/10 blur-3xl"></div>
+
+          <div class="flex items-center gap-2 font-mono text-xs text-gold/90">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+            <span>THE 2026 PROMISE</span>
+          </div>
+
+          <h2 class="mt-4 font-display text-3xl tracking-tight text-stone sm:text-4xl">
+            Integrity should never be hidden behind plaster.
+          </h2>
+
+          <blockquote class="mt-6 max-w-4xl border-l-2 border-gold/60 pl-6 text-base leading-relaxed text-stone/80">
+            “In an industry of shortcuts, we choose the long road of perfection. We believe that your home's integrity shouldn't be a mystery hidden behind plaster.
+            We invite you to see the steel, review the data, and witness the honesty of our craft.”
+            <footer class="mt-4 font-mono text-sm text-stone/70">— The GrihoGori Collective</footer>
+          </blockquote>
+
+          <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+            <a href="#consultation" class="focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
+              Request a Turnkey Consultation
+            </a>
+            <a href="#top" class="focus-ring inline-flex items-center justify-center rounded-2xl border border-white/12 bg-white/5 px-6 py-3 text-sm font-semibold text-stone hover:bg-white/10 transition">
+              Back to Top
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSULTATION (CTA block / anchor target) -->
+    <section id="consultation" class="py-16 bg-black/10">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="reveal grid gap-8 lg:grid-cols-12 items-start">
+          <div class="lg:col-span-6">
+            <div class="font-mono text-xs text-gold/90">TURNKEY CONSULTATION</div>
+            <h2 class="mt-4 font-display text-3xl text-stone">Request a consultation built on clarity.</h2>
+            <p class="mt-4 text-sm leading-relaxed text-stone/75">
+              No marketing loops. Share your project fundamentals, and we’ll respond with an engineered next step.
+            </p>
+
+            <div class="mt-6 rounded-3xl border border-white/10 bg-white/5 p-6">
+              <div class="font-mono text-xs text-stone/70">Clarity begins before construction:</div>
+              <div class="mt-2 font-mono text-sm text-stone/90">Deliverables → Concept + BOQ + Timeline + Execution Method</div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6">
+            <form class="reveal rounded-3xl border border-white/10 bg-white/5 p-7 shadow-soft">
+              <div class="grid gap-4 sm:grid-cols-2">
+                <label class="grid gap-2">
+                  <span class="font-mono text-xs text-stone/70">Name</span>
+                  <input class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                    placeholder="Your full name" />
+                </label>
+                <label class="grid gap-2">
+                  <span class="font-mono text-xs text-stone/70">Phone / WhatsApp</span>
+                  <input class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                    placeholder="+880 ..." />
+                </label>
+
+                <label class="grid gap-2">
+                  <span class="font-mono text-xs text-stone/70">Location</span>
+                  <input class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                    placeholder="City / Area" />
+                </label>
+
+                <label class="grid gap-2">
+                  <span class="font-mono text-xs text-stone/70">Plot Size</span>
+                  <input class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                    placeholder="e.g., 5 katha / 10,000 sft" />
+                </label>
+
+                <label class="grid gap-2">
+                  <span class="font-mono text-xs text-stone/70">Budget Range</span>
+                  <input class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                    placeholder="e.g., 2.5–4.0 Cr" />
+                </label>
+
+                <label class="grid gap-2">
+                  <span class="font-mono text-xs text-stone/70">Timeline</span>
+                  <input class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                    placeholder="e.g., Start in 60 days" />
+                </label>
+              </div>
+
+              <label class="mt-4 grid gap-2">
+                <span class="font-mono text-xs text-stone/70">Project Notes</span>
+                <textarea rows="4" class="focus-ring rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone placeholder:text-stone/40"
+                  placeholder="Villa / commercial / interior, number of floors, must-have features..."></textarea>
+              </label>
+
+              <button type="button" class="mt-5 w-full focus-ring inline-flex items-center justify-center rounded-2xl bg-gold px-6 py-3 text-sm font-semibold text-navy hover:opacity-95 transition">
+                Submit Request
+              </button>
+
+              <p class="mt-4 text-xs text-stone/55">
+                Note: This is a UI form layout. Connect it to your backend (Email/CRM/Google Sheet) when integrating.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 py-10">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div class="font-display text-lg text-stone">GrihoGori</div>
+            <div class="mt-1 text-sm text-stone/60">Design. Build. Live.</div>
+          </div>
+          <div class="text-sm text-stone/60">
+            © <span id="year"></span> GrihoGori. Subsurface Honesty.
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Header shrink on scroll
+    const header = document.getElementById('siteHeader');
+    const onScroll = () => {
+      if (window.scrollY > 18) header.classList.add('shrink');
+      else header.classList.remove('shrink');
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    menuBtn?.addEventListener('click', () => {
+      const isOpen = !mobileNav.classList.contains('hidden');
+      mobileNav.classList.toggle('hidden');
+      menuBtn.setAttribute('aria-expanded', String(!isOpen));
+    });
+    // Close mobile nav when clicking a link
+    mobileNav?.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (!a) return;
+      mobileNav.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+
+    // Reveal on scroll (IntersectionObserver)
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+
+    // Counters (animate once when visible)
+    const counters = document.querySelectorAll('.count');
+    const animateCounter = (el) => {
+      const target = Number(el.getAttribute('data-target') || '0');
+      const isPercent = el.nextElementSibling && el.nextElementSibling.textContent.includes('%');
+      const duration = 900;
+      const start = performance.now();
+      const from = 0;
+
+      const tick = (t) => {
+        const p = Math.min((t - start) / duration, 1);
+        const value = Math.floor(from + (target - from) * (1 - Math.pow(1 - p, 3)));
+        el.textContent = String(value);
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = String(target);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const counterIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        if (el.dataset.done === '1') return;
+        el.dataset.done = '1';
+        animateCounter(el);
+      });
+    }, { threshold: 0.6 });
+
+    counters.forEach(c => counterIO.observe(c));
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
