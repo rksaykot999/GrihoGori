@@ -25,12 +25,12 @@
             mono: ['"Roboto Mono"', 'monospace'],
           },
           colors: {
-            navy: '#1A2B3C',
-            gold: '#C5A059',
+            navy: '#1A2F2A',        // muted dark green (less intense)
+            gold: '#C5A059',         // warm gold (accent)
             stone: '#E5E5E5',
             charcoal: '#333333',
-            void: '#0F1623',
-            glass: 'rgba(26, 43, 60, 0.6)',
+            void: '#0F1F1A',         // deeper muted green
+            glass: 'rgba(26, 47, 42, 0.6)',
           },
           animation: {
             'grid-flow': 'gridFlow 60s linear infinite',
@@ -51,7 +51,7 @@
 
   <style>
     :root {
-      --navy: #1A2B3C;
+      --navy: #1A2F2A;
       --gold: #C5A059;
       --stone: #E5E5E5;
     }
@@ -68,22 +68,22 @@
       touch-action: none;
     }
 
-    /* --- Blueprint/Neural Grid Background --- */
+    /* --- Blueprint/Neural Grid Background (more subtle, less green) --- */
     .blueprint-bg {
       position: fixed;
       inset: 0;
       z-index: -1;
       background-image:
-        linear-gradient(rgba(197, 160, 89, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(197, 160, 89, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(197, 160, 89, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(197, 160, 89, 0.02) 1px, transparent 1px);
       background-size: 40px 40px;
       animation: gridFlow 60s linear infinite;
       mask-image: radial-gradient(circle at 50% 40%, black 40%, transparent 90%);
     }
 
-    /* --- Glass & Gold Utilities --- */
+    /* --- Glass & Gold Utilities (updated with new navy) --- */
     .glass-card {
-      background: rgba(26, 43, 60, 0.7);
+      background: rgba(26, 47, 42, 0.7);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(197, 160, 89, 0.1);
@@ -138,7 +138,7 @@
 
     .btn-solid-gold {
       background: #C5A059;
-      color: #0F1623;
+      color: #0F1F1A;              /* dark muted green for contrast */
       transition: all 0.3s ease;
     }
 
@@ -151,13 +151,13 @@
     /* --- Animations & Utilities --- */
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(30px) scale(0.98);
       transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .reveal.active {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     ::selection {
@@ -183,11 +183,11 @@
     }
 
     ::-webkit-scrollbar-track {
-      background: #1A2B3C;
+      background: #1A2F2A;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #334b63;
+      background: #2b4a3a;
       border-radius: 4px;
     }
 
@@ -199,7 +199,7 @@
 
 <body class="antialiased selection:bg-gold selection:text-white font-sans">
 
-  <!-- Background Layer -->
+  <!-- Background Layer (muted green) -->
   <div class="blueprint-bg"></div>
   <div class="fixed inset-0 bg-gradient-to-b from-navy/90 via-navy/50 to-navy pointer-events-none z-[-1]"></div>
 
@@ -245,13 +245,10 @@
       </button>
     </div>
 
-    <!-- Mobile Menu (Backrop + Panel) -->
+    <!-- Mobile Menu (Backdrop + Panel) -->
     <div id="mobile-menu"
       class="fixed inset-0 z-[100] lg:hidden pointer-events-none opacity-0 transition-opacity duration-300">
-      <!-- Backdrop -->
       <div id="menu-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-
-      <!-- Panel -->
       <div
         class="absolute inset-0 bg-navy translate-x-full transition-transform duration-300 will-change-transform
                h-dvh overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]
@@ -281,8 +278,8 @@
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+  <!-- HERO SECTION (with reveal) -->
+  <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden reveal">
     <div class="absolute inset-0 z-[-2] opacity-30">
       <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
         class="w-full h-full object-cover grayscale brightness-75" alt="Architecture">
@@ -292,25 +289,25 @@
 
     <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
       <div
-        class="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/5 border border-gold/20 text-xs font-mono text-gold mb-8 backdrop-blur-sm">
+        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/5 border border-gold/20 text-xs font-mono text-gold mb-8 backdrop-blur-sm">
         <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
         SYSTEM_STATUS: VISIONARY_LIVING_ACTIVE
       </div>
 
       <h1
-        class="reveal font-serif text-4xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.0] text-stone">
+        class="font-serif text-4xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.0] text-stone">
         Your Legacy, <span class="gradient-text-gold italic">Engineered.</span><br />
         Your Vision, <span class="text-white">Realized.</span>
       </h1>
 
-      <p class="reveal max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-12 leading-relaxed font-sans font-light">
+      <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-400 mb-12 leading-relaxed font-sans font-light">
         GrihoGori is a multidisciplinary design-build studio where <span class="text-stone font-medium">architectural
           poetry</span> meets the unyielding logic of precision engineering. Specializing in high-end residential
         villas, commercial landmarks, and turnkey luxury interiors, we redefine the standard of modern living through
         <span class="text-gold font-medium">Subsurface Honesty</span> and absolute transparency.
       </p>
 
-      <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-5">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
         <a href="#portfolio" class="btn-solid-gold px-8 py-4 font-bold tracking-wide text-sm uppercase rounded-sm">
           View Our Masterpieces
         </a>
@@ -322,9 +319,9 @@
   </section>
 
   <!-- THE GRIHOGORI DIFFERENCE (ABOUT) -->
-  <section id="about" class="py-24 relative bg-navy">
+  <section id="about" class="py-24 relative bg-navy reveal">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="reveal mb-20 text-center">
+      <div class="mb-20 text-center">
         <span class="text-gold font-mono text-xs tracking-widest uppercase mb-3 block">Pain Point Detected</span>
         <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-6">One Team. One Vision. <span
             class="text-gold italic">Zero Stress.</span></h2>
@@ -356,7 +353,7 @@
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="reveal glass-card p-8 rounded-sm group hover:bg-gold/5">
+        <div class="glass-card p-8 rounded-sm group hover:bg-gold/5 reveal">
           <div
             class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-6 group-hover:bg-gold group-hover:text-navy transition-all text-gold">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -369,7 +366,7 @@
           <p class="text-sm text-slate-400 leading-relaxed">From the first conceptual sketch to the final brick laid,
             our architects and engineers work at the same table.</p>
         </div>
-        <div class="reveal glass-card p-8 rounded-sm group hover:bg-gold/5">
+        <div class="glass-card p-8 rounded-sm group hover:bg-gold/5 reveal">
           <div
             class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-6 group-hover:bg-gold group-hover:text-navy transition-all text-gold">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -382,7 +379,7 @@
           <p class="text-sm text-slate-400 leading-relaxed">We build your home twice—first in a high-fidelity digital
             environment (BIM) to detect clashes, and then on your land with surgical precision.</p>
         </div>
-        <div class="reveal glass-card p-8 rounded-sm group hover:bg-gold/5">
+        <div class="glass-card p-8 rounded-sm group hover:bg-gold/5 reveal">
           <div
             class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-6 group-hover:bg-gold group-hover:text-navy transition-all text-gold">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -400,16 +397,16 @@
   </section>
 
   <!-- THREE PILLARS (SERVICES) -->
-  <section id="services" class="py-24 relative border-y border-white/5 bg-navy/50">
+  <section id="services" class="py-24 relative border-y border-white/5 bg-navy/50 reveal">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="reveal text-center mb-16">
+      <div class="text-center mb-16">
         <span class="text-white/50 font-mono text-xs tracking-widest uppercase mb-3 block">Design · Build · Decor</span>
         <h2 class="font-serif text-4xl font-bold text-white">The Three Pillars of <span
             class="text-gold">Excellence</span></h2>
       </div>
 
       <div class="grid lg:grid-cols-3 gap-8">
-        <article class="reveal glass-card rounded-sm overflow-hidden group">
+        <article class="glass-card rounded-sm overflow-hidden group reveal">
           <div class="h-56 bg-black relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=800"
               class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-105">
@@ -427,7 +424,7 @@
           </div>
         </article>
 
-        <article class="reveal glass-card rounded-sm overflow-hidden group">
+        <article class="glass-card rounded-sm overflow-hidden group reveal">
           <div class="h-56 bg-black relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=800"
               class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-105">
@@ -445,7 +442,7 @@
           </div>
         </article>
 
-        <article class="reveal glass-card rounded-sm overflow-hidden group">
+        <article class="glass-card rounded-sm overflow-hidden group reveal">
           <div class="h-56 bg-black relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800"
               class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700 group-hover:scale-105">
@@ -468,9 +465,9 @@
   </section>
 
   <!-- NUMBERS -->
-  <section class="py-20 border-b border-white/5 bg-navy">
+  <section class="py-20 border-b border-white/5 bg-navy reveal">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="reveal grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="text-center p-6 border border-white/5 bg-white/[0.02]">
           <div class="font-serif text-4xl md:text-5xl font-bold text-stone mb-2">32<span class="text-gold">+</span></div>
           <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">Projects Managed</div>
@@ -492,9 +489,9 @@
   </section>
 
   <!-- 2026 PROMISE -->
-  <section class="py-24 relative overflow-hidden">
+  <section class="py-24 relative overflow-hidden reveal">
     <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-      <div class="reveal mb-8">
+      <div class="mb-8">
         <svg class="w-12 h-12 text-gold mx-auto mb-6 opacity-80" fill="currentColor" viewBox="0 0 24 24">
           <path
             d="M14.017 21L14.017 18C14.017 16.8954 13.1216 16 12.017 16H11.983C10.8784 16 9.98298 16.8954 9.98298 18L9.98298 21H5V11.5438L12 5.03055L19 11.5438V21H14.017ZM12 8L12 4L12 8Z"
@@ -515,15 +512,15 @@
   </section>
 
   <!-- PORTFOLIO SECTION -->
-  <section id="portfolio" class="py-24 relative bg-black/20">
+  <section id="portfolio" class="py-24 relative bg-black/20 reveal">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="reveal text-center mb-16">
+      <div class="text-center mb-16">
         <span class="text-gold font-mono text-xs tracking-widest uppercase mb-3 block">Gallery</span>
         <h2 class="font-serif text-4xl font-bold text-white">Our <span class="text-gold italic">Masterpieces</span></h2>
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="reveal group relative aspect-[4/5] overflow-hidden rounded-sm cursor-pointer">
+        <div class="group relative aspect-[4/5] overflow-hidden rounded-sm cursor-pointer reveal">
           <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="The Onyx Villa">
           <div
@@ -533,7 +530,7 @@
           </div>
         </div>
 
-        <div class="reveal group relative aspect-[4/5] overflow-hidden rounded-sm cursor-pointer">
+        <div class="group relative aspect-[4/5] overflow-hidden rounded-sm cursor-pointer reveal">
           <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Titan HQ">
           <div
@@ -543,7 +540,7 @@
           </div>
         </div>
 
-        <div class="reveal group relative aspect-[4/5] overflow-hidden rounded-sm cursor-pointer">
+        <div class="group relative aspect-[4/5] overflow-hidden rounded-sm cursor-pointer reveal">
           <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1000&auto=format&fit=crop"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Loft 2026">
           <div
@@ -557,9 +554,9 @@
   </section>
 
   <!-- CONTACT FORM -->
-  <section id="contact" class="py-24 relative overflow-hidden bg-white/[0.02]">
+  <section id="contact" class="py-24 relative overflow-hidden bg-white/[0.02] reveal">
     <div class="max-w-4xl mx-auto px-6 relative z-10">
-      <div class="reveal glass-card p-10 rounded-sm border-t border-gold/20">
+      <div class="glass-card p-10 rounded-sm border-t border-gold/20">
         <div class="text-center mb-10">
           <span class="font-mono text-xs text-gold uppercase tracking-widest">Initialization</span>
           <h2 class="font-serif text-3xl md:text-4xl font-bold mt-2 text-white">Request a Turnkey Consultation</h2>
@@ -605,7 +602,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="relative bg-[#0F1623] border-t border-white/5 pt-20 pb-10">
+  <footer class="relative bg-void border-t border-white/5 pt-20 pb-10">
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         <div class="space-y-6">
@@ -679,7 +676,7 @@
   <script>
     // --- Mobile Menu Logic (Fixed & Robust) ---
     const mobileMenu = document.getElementById('mobile-menu');
-    const menuPanel = mobileMenu.querySelector('div.absolute.inset-0.bg-navy'); // panel
+    const menuPanel = mobileMenu.querySelector('div.absolute.inset-0.bg-navy');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const closeMenuBtn = document.getElementById('close-menu-btn');
     const menuBackdrop = document.getElementById('menu-backdrop');
@@ -710,7 +707,6 @@
       document.body.classList.remove('no-scroll');
       mobileMenuBtn.setAttribute('aria-expanded', 'false');
 
-      // wait for fade-out then disable pointer events (prevents accidental taps)
       setTimeout(() => {
         if (!isOpen) mobileMenu.classList.add('pointer-events-none');
       }, 300);
@@ -730,17 +726,15 @@
       });
     });
 
-    // Close on Escape
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
     });
 
-    // Close if user rotates / resizes to desktop breakpoint
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 1024) closeMenu();
     });
 
-    // --- Scroll Reveal Logic ---
+    // --- Scroll Reveal Logic (enhanced with scale and blur) ---
     const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
