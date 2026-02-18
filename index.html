@@ -207,18 +207,26 @@
   <header id="navbar"
     class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-navy/90 backdrop-blur-xl">
     <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div
-          class="relative w-12 h-12 flex items-center justify-center overflow-hidden ">
-          <img src="images/logo-white-new.png" alt="Logo" class="w-full h-full object-cover">
-        </div>
-        <div class="flex flex-col">
-          <span class="font-serif font-bold text-lg leading-none tracking-wide text-stone">GRIHO<span
-              class="text-gold">GORI</span></span>
-          <span class="font-mono text-[9px] tracking-[0.2em] text-gold/70 uppercase">Design. Build. Live</span>
-        </div>
-      </a>
+    
+	<!-- Logo -->
+<a href="#" class="flex items-center">
+  <img 
+    src="images/Grihogori-logo-MIX.png"
+    alt="Grihogori — Design. Build. Live"
+    class="object-contain"
+    style="width:235px; height:80px;"
+    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+  >
+
+  <!-- Fallback text logo if image fails -->
+  <span 
+    class="hidden font-serif font-bold tracking-wide text-stone text-xl">
+    Grihogori
+    <span class="block font-mono text-[10px] tracking-[0.3em] text-gold uppercase">
+      Design. Build. Live
+    </span>
+  </span>
+</a>
 
       <!-- Desktop Nav -->
       <nav class="hidden lg:flex items-center gap-8">
@@ -605,7 +613,7 @@
             <img src="images/white Grihogori-logo-coppy.png" alt="">
           </a>
           <p class="text-slate-400 text-sm leading-relaxed font-sans">
-            Design. Build. Live.<br>
+            <br>
             The Master Builder tradition revived for 2026.
           </p>
           <div class="flex gap-4">
