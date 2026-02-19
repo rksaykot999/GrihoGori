@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrihoGori — About Us · Master Builder</title>
+  <title>GrihoGori — Services · Design & Build</title>
 
   <!-- Fonts (same as homepage) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -173,6 +173,76 @@
       font-size: 1.1rem;
       color: #e0d6c0;
     }
+    .service-mini-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(197,160,89,0.15);
+      padding: 1.5rem;
+      border-radius: 0.125rem;
+      transition: all 0.3s ease;
+    }
+    .service-mini-card:hover {
+      border-color: rgba(197,160,89,0.4);
+      background: rgba(197,160,89,0.05);
+    }
+    /* New service feature style (non‑boxy) */
+    .service-feature {
+      display: flex;
+      gap: 1.25rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+      transition: padding 0.5s ease;
+    }
+    .service-feature:last-child {
+      border-bottom: none;
+    }
+    .service-feature:hover {
+      background: rgba(197, 160, 89, 0.02);
+      padding-left: 0.5rem;
+      border-bottom-color: rgba(197, 160, 89, 0.4);
+    }
+    .service-icon {
+      flex-shrink: 0;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(197, 160, 89, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #C5A059;
+      transition: all 0.3s ease;
+    }
+    .service-feature:hover .service-icon {
+      background: rgba(197, 160, 89, 0.15);
+      border-color: #C5A059;
+      transform: scale(1.05);
+    }
+    .service-content h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #E5E5E5;
+      margin-bottom: 0.5rem;
+    }
+    .service-content p {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      line-height: 1.6;
+    }
+    .service-content .tech-detail {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.8rem;
+      color: #C5A059;
+      margin-top: 0.5rem;
+    }
+    .section-tag {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #C5A059;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
   </style>
 </head>
 <body class="antialiased selection:bg-gold selection:text-white font-sans">
@@ -181,7 +251,7 @@
   <div class="blueprint-bg"></div>
   <div class="fixed inset-0 bg-gradient-to-b from-navy/90 via-navy/50 to-navy pointer-events-none z-[-1]"></div>
 
-  <!-- HEADER (exact copy from index.html, unchanged) -->
+  <!-- HEADER (exact copy from about.html, updated active link for services) -->
   <header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-navy/90 backdrop-blur-xl">
     <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
       <!-- Logo -->
@@ -197,8 +267,8 @@
       <nav class="hidden lg:flex items-center gap-8">
         <ul class="flex gap-6 text-xs font-semibold tracking-widest text-slate-400 uppercase font-sans">
           <li><a href="index.html" class="hover:text-gold transition-colors">HOME</a></li>
-          <li><a href="#about" class="text-gold transition-colors">ABOUT US</a></li>
-          <li><a href="services.html" class="hover:text-gold transition-colors">SERVICES</a></li>
+          <li><a href="about.html" class="hover:text-gold transition-colors">ABOUT US</a></li>
+          <li><a href="services.html" class="text-gold transition-colors">SERVICES</a></li>
           <li><a href="portfolio.html" class="hover:text-gold transition-colors">PORTFOLIO</a></li>
           <li><a href="process.html" class="hover:text-gold transition-colors">OUR PROCESS</a></li>
           <li><a href="insight.html" class="hover:text-gold transition-colors">INSIGHTS</a></li>
@@ -225,8 +295,8 @@
         </button>
         <div class="max-w-md mx-auto w-full flex flex-col items-center gap-5">
           <a href="index.html" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">HOME</a>
-          <a href="#about" class="mobile-link w-full text-center text-xl font-serif text-gold transition-colors uppercase tracking-widest py-3">ABOUT US</a>
-          <a href="services.html" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">SERVICES</a>
+          <a href="about.html" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">ABOUT US</a>
+          <a href="services.html" class="mobile-link w-full text-center text-xl font-serif text-gold transition-colors uppercase tracking-widest py-3">SERVICES</a>
           <a href="portfolio.html" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">PORTFOLIO</a>
           <a href="process.html" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">OUR PROCESS</a>
           <a href="insight.html" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">INSIGHTS</a>
@@ -236,149 +306,190 @@
     </div>
   </header>
 
-  <!-- MAIN ABOUT CONTENT -->
+  <!-- MAIN SERVICES CONTENT -->
   <main class="pt-32 md:pt-40 pb-20">
 
-    <!-- Hero (smaller than homepage) -->
+    <!-- Hero Section -->
     <section class="relative overflow-hidden reveal">
       <div class="absolute inset-0 z-[-2] opacity-20">
-        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale brightness-50" alt="Foundation">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale brightness-50" alt="Construction blueprint">
         <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/70 to-transparent"></div>
         <div class="scan-line"></div>
       </div>
       <div class="max-w-5xl mx-auto px-6 py-16 md:py-24 relative z-10 text-center">
-        <span class="font-mono text-xs text-gold tracking-widest uppercase mb-4 block">Identity · Legacy · DNA</span>
+        <span class="font-mono text-xs text-gold tracking-widest uppercase mb-4 block">Integrated ecosystem</span>
         <h1 class="font-serif text-5xl md:text-7xl font-bold text-white leading-tight">
-          Crafting the Future, <span class="text-gold italic">Respecting the Foundation.</span>
+          Where Visionary Design <span class="text-gold italic">Meets</span> Engineering Precision.
         </h1>
-        <p class="text-xl md:text-2xl text-slate-300 mt-6 mx-auto max-w-3xl font-light leading-relaxed text-center">
-          We are the architects of permanence. At GrihoGori, we merge the soul of an artist with the cold, hard logic of an engineer.
+        <p class="text-xl md:text-2xl text-slate-300 mt-6 mx-auto max-w-3xl font-light leading-relaxed">
+          We offer an integrated ecosystem that eliminates the gap between the drawing board and the construction site. From the first soil test to the final bespoke furniture piece, GrihoGori is the single point of responsibility for your legacy.
         </p>
       </div>
     </section>
 
-    <!-- OUR IDENTITY: Master Builder -->
-    <section id="about" class="py-20 reveal">
+    <!-- SERVICE 1: Architectural Consultancy & Master Planning -->
+    <section class="py-20 reveal">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <span class="font-mono text-gold text-sm tracking-widest uppercase">01 / identity</span>
-            <h2 class="font-serif text-4xl font-bold text-white mt-2 mb-6">The Return of the <span class="text-gold">Master Builder</span></h2>
-            <div class="space-y-5 text-slate-300 leading-relaxed">
-              <p>GrihoGori was born out of a passion for structural perfection. In an era where design and construction have become dangerously fragmented, we have revived the ancient philosophy of the "Master Builder." We are not just a collective of veteran architects, innovative interior designers, and master civil engineers—we are a single, unified brain.</p>
-              <p>We believe that every project, whether a boutique urban residence or a sprawling commercial complex, deserves a holistic approach where the designer and the builder are one and the same.</p>
-              <p>At GrihoGori, we don't just "provide a service." We act as the guardians of your investment. We understand that for our clients, a building is more than just an asset—it is a legacy, a sanctuary, and a physical manifestation of their life’s work. Our mission is to ensure that legacy stands unyielding against time.</p>
+        <div class="text-center mb-12">
+          <span class="font-mono text-gold text-sm tracking-widest uppercase">01 / foundation</span>
+          <h2 class="font-serif text-4xl font-bold text-white mt-2">Architectural Consultancy <span class="text-gold">&</span> Master Planning</h2>
+          <p class="text-slate-400 max-w-2xl mx-auto mt-3">We don't just design buildings; we design environments.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Site Intelligence -->
+          <div class="service-mini-card reveal">
+            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
             </div>
+            <h3 class="font-serif text-lg font-bold text-stone mb-2">Site Intelligence & Master Planning</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Exhaustive site analysis: solar path, wind orientation, soil geophysics. Maximise plot potential & minimise energy consumption.</p>
           </div>
-          <div class="glass-card p-8 rounded-sm border-gold/20">
-            <div class="aspect-video bg-black/40 flex items-center justify-center border border-white/10">
-              <svg class="w-24 h-24 text-gold/40" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-              </svg>
+          <!-- Digital Twin -->
+          <div class="service-mini-card reveal">
+            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             </div>
-            <p class="text-sm font-mono text-gold/70 mt-4 text-center">“One brain, one responsibility — zero fragmentation”</p>
+            <h3 class="font-serif text-lg font-bold text-stone mb-2">Digital Twin (BIM & VR)</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Building Information Modeling creates a digital duplicate. Experience 1:1 VR walkthroughs before ground is broken.</p>
+          </div>
+          <!-- Structural Engineering -->
+          <div class="service-mini-card reveal">
+            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 3v9a1 1 0 01-1 1H8a1 1 0 01-1-1V7L8 4z" /></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone mb-2">Structural Engineering (Safety Core)</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Earthquake‑resistant designs with rigorous mathematical modeling. Exact reinforcement area calculation:</p>
+            <div class="formula-block mt-2 text-xs p-2">Aₛ = M / (φ · fᵧ · (d – a/2))</div>
+          </div>
+          <!-- Regulatory & Approvals -->
+          <div class="service-mini-card reveal">
+            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone mb-2">Regulatory & Approval Management</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Seamless navigation of municipal authorities, CDA/RAJUK approvals, and environmental certifications.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- OUR DNA: three pillars -->
-    <section id="services" class="py-16 bg-black/20 reveal">
+        <!-- SERVICE 2: Civil Construction (new style) -->
+    <section class="py-16 bg-black/20 reveal">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center mb-14">
-          <span class="font-mono text-gold text-sm tracking-widest uppercase">02 / our dna</span>
-          <h2 class="font-serif text-4xl font-bold text-white mt-2">The Core Values of <span class="text-gold">Excellence</span></h2>
-          <p class="text-slate-400 max-w-2xl mx-auto mt-4">Three non-negotiable pillars that define the GrihoGori standard.</p>
+        <div class="text-center mb-12">
+          <span class="section-tag">02 / execution</span>
+          <h2 class="font-serif text-4xl font-bold text-white mt-2">Civil Construction <span class="text-gold">(The Master Build)</span></h2>
+          <p class="text-slate-400 max-w-2xl mx-auto mt-3">Engineering with “Subsurface Honesty.”</p>
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-6">
-          <!-- Integrity First -->
-          <div class="glass-card p-8 rounded-sm reveal hover:border-gold/40 transition-all">
-            <div class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-5 text-gold">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
+        <div class="max-w-4xl mx-auto">
+          <!-- Grey Structure -->
+          <div class="service-feature">
+            <div class="service-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
             </div>
-            <h3 class="font-serif text-2xl font-bold text-stone mb-3">Integrity First</h3>
-            <p class="text-sm text-slate-400 mb-3 leading-relaxed"><span class="text-gold font-medium">“Subsurface Honesty”</span> — In construction, the most critical elements are the ones you will never see. We document the hidden stages with the same fervor as the final reveal. If it isn't perfect under the plaster, it isn't a GrihoGori build.</p>
-            <ul class="text-xs font-mono text-gold/80 space-y-1 list-disc pl-4">
-              <li>No shortcuts: exact steel grade, exact ratios</li>
-              <li>Verification of every buried beam</li>
-            </ul>
+            <div class="service-content">
+              <h4>Grey Structure Excellence</h4>
+              <p>High‑performance RCC frames. Grade‑60 Deformed Steel, M‑25/M‑30 Ready‑Mix Concrete – moisture‑proof, crack‑resistant skeleton.</p>
+            </div>
           </div>
-
-          <!-- Precision Engineering -->
-          <div class="glass-card p-8 rounded-sm reveal hover:border-gold/40 transition-all">
-            <div class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-5 text-gold">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 3v9a1 1 0 01-1 1H8a1 1 0 01-1-1V7L8 4z" />
-              </svg>
+          <!-- Turnkey Turnaround -->
+          <div class="service-feature">
+            <div class="service-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
             </div>
-            <h3 class="font-serif text-2xl font-bold text-stone mb-3">Precision Engineering</h3>
-            <p class="text-sm text-slate-400 mb-3 leading-relaxed">We replace guesswork with mathematical certainty. Our engineering division utilizes advanced load‑bearing simulations and soil‑specific foundation modeling.</p>
-            <div class="formula-block my-4 text-sm">
-              <span class="text-gold">Aₛ = M / (φ · fᵧ · (d – a/2))</span>
+            <div class="service-content">
+              <h4>Turnkey Turnaround (Plot‑to‑Key)</h4>
+              <p>Fixed‑Price BOQ, supply chain management, material cost lock‑in, strict Gantt‑chart timeline.</p>
             </div>
-            <p class="text-xs text-slate-400">By calculating the exact Reinforcement Area (Aₛ), we ensure your structure is engineered for the 50‑year seismic cycle, not just the local building code.</p>
           </div>
-
-          <!-- Sustainable Innovation -->
-          <div class="glass-card p-8 rounded-sm reveal hover:border-gold/40 transition-all">
-            <div class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-5 text-gold">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-              </svg>
+          <!-- MEP Integration -->
+          <div class="service-feature">
+            <div class="service-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
             </div>
-            <h3 class="font-serif text-2xl font-bold text-stone mb-3">Sustainable Innovation</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">We design for 2026 & beyond. Passive architecture reduces HVAC reliance by up to 30%. Smart ecosystems, solar‑ready, AI‑integrated — your home stays modern for decades.</p>
-            <ul class="text-xs font-mono text-gold/80 space-y-1 mt-3 list-disc pl-4">
-              <li>Thermal‑mass modeling & wind‑tunnel simulations</li>
-              <li>Living materials + circadian lighting grids</li>
-            </ul>
+            <div class="service-content">
+              <h4>MEP Integration</h4>
+              <p>Pressure‑tested plumbing (1.5x load), FRLS wiring, high‑performance electrical grids.</p>
+            </div>
+          </div>
+          <!-- On‑Site Audits -->
+          <div class="service-feature">
+            <div class="service-icon">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            </div>
+            <div class="service-content">
+              <h4>On‑Site Quality Audits</h4>
+              <p>Daily digital logs, high‑res photos, time‑lapse updates via Client Dashboard – every column plumb, every beam level.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- THE GRIHOGORI PROMISE (quote style) -->
-    <section class="py-24 relative overflow-hidden reveal">
+    <!-- SERVICE 3: Interior Architecture & Exterior Finishing -->
+    <section class="py-16 reveal">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <span class="font-mono text-gold text-sm tracking-widest uppercase">03 / soul</span>
+          <h2 class="font-serif text-4xl font-bold text-white mt-2">Interior Architecture <span class="text-gold">&</span> Exterior Finishing</h2>
+          <p class="text-slate-400 max-w-2xl mx-auto mt-3">Curating the soul of your space.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Interior Architecture -->
+          <div class="service-mini-card reveal">
+            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone mb-2">Interior Architecture</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Custom modular kitchens, bespoke joinery, ergonomic layouts. AI‑integrated smart‑lighting grids that adapt to your circadian rhythm.</p>
+          </div>
+          <!-- Exterior Facade -->
+          <div class="service-mini-card reveal">
+            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone mb-2">Exterior Facade Treatment</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Modern HPL cladding, natural stone textures, Thermal‑Break Glazing – landmarks that breathe.</p>
+          </div>
+          <!-- Biophilic Landscaping -->
+          <div class="service-mini-card reveal">
+            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone mb-2">Biophilic Landscaping</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Hydroponic roof gardens, vertical greens, water bodies – micro‑climates that lower ambient temperature.</p>
+          </div>
+          <!-- Acoustic & Thermal Comfort -->
+          <div class="service-mini-card reveal">
+            <div class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center text-gold mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m0 0l-2.828 2.828m2.828-2.828a5 5 0 01-1.414-1.414m0 0L3.172 16.95" /></svg>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone mb-2">Acoustic & Thermal Comfort</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Specialised insulation, double‑glazed windows – silent, temperature‑controlled interiors regardless of urban chaos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The GrihoGori Advantage -->
+    <section class="py-20 relative overflow-hidden reveal">
       <div class="absolute inset-0 z-[-2] opacity-10">
-        <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale" alt="Steel structure">
+        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale" alt="Team collaboration">
       </div>
       <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-        <svg class="w-16 h-16 text-gold/30 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M14.017 21L14.017 18C14.017 16.8954 13.1216 16 12.017 16H11.983C10.8784 16 9.98298 16.8954 9.98298 18L9.98298 21H5V11.5438L12 5.03055L19 11.5438V21H14.017ZM12 8L12 4L12 8Z" stroke="currentColor" stroke-width="2" fill="none" />
-        </svg>
-        <h3 class="font-serif text-3xl md:text-4xl text-stone italic leading-tight mb-8">
-          “We don't just build to fulfill a contract. We build to satisfy the laws of physics and the demands of art. When you step into a GrihoGori space, you are stepping into a structure where every line has a purpose and every beam has a promise.”
-        </h3>
-        <div class="inline-block border-t border-gold/30 pt-4">
-          <span class="font-mono text-gold tracking-widest uppercase text-sm">— The GrihoGori Collective</span>
+        <span class="font-mono text-xs text-gold tracking-widest uppercase mb-4 block">The GrihoGori Advantage</span>
+        <div class="glass-card p-10 rounded-sm border-t border-gold/20">
+          <p class="text-lg md:text-xl text-slate-200 italic leading-relaxed font-light">
+            “Most firms stop at the design. Most contractors start at the build. GrihoGori owns the entire journey. By integrating these services, we eliminate the 'Mistake Tax' and deliver a finished product that is 100% faithful to the original 3D vision.”
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- optional small stats / legacy (can mirror homepage but minimal) -->
-    <section class="py-20 border-b border-white/5 bg-navy reveal">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
-        <div class="text-center p-6">
-          <div class="font-serif text-4xl md:text-5xl font-bold text-gold mb-2">4</div>
-          <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">generations of know-how</div>
-        </div>
-        <div class="text-center p-6">
-          <div class="font-serif text-4xl md:text-5xl font-bold text-gold mb-2">100%</div>
-          <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">subsurface honesty</div>
-        </div>
-        <div class="text-center p-6">
-          <div class="font-serif text-4xl md:text-5xl font-bold text-gold mb-2">∞</div>
-          <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">legacy mindset</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-    <!-- CONTACT (same form as index, but could be kept) – we keep it to match footer links -->
+    <!-- CONTACT (same form as index) -->
     <section id="contact" class="py-24 relative overflow-hidden bg-white/[0.02] reveal">
       <div class="max-w-4xl mx-auto px-6 relative z-10">
         <div class="glass-card p-10 rounded-sm border-t border-gold/20">
@@ -416,7 +527,7 @@
     </section>
   </main>
 
-  <!-- FOOTER (exact copy from index.html, unchanged) -->
+  <!-- FOOTER (exact copy from about.html) -->
   <footer class="relative bg-void border-t border-white/5 pt-20 pb-10">
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -442,7 +553,7 @@
           <h4 class="font-serif font-bold text-white mb-6">Navigation</h4>
           <ul class="space-y-3 text-sm text-slate-400 font-sans">
             <li><a href="index.html" class="hover:text-gold transition-colors">HOME</a></li>
-            <li><a href="#about" class="hover:text-gold transition-colors">ABOUT US</a></li>
+            <li><a href="about.html" class="hover:text-gold transition-colors">ABOUT US</a></li>
             <li><a href="services.html" class="hover:text-gold transition-colors">SERVICES</a></li>
             <li><a href="portfolio.html" class="hover:text-gold transition-colors">PORTFOLIO</a></li>
             <li><a href="process.html" class="hover:text-gold transition-colors">OUR PROCESS</a></li>
@@ -474,7 +585,7 @@
     </div>
   </footer>
 
-  <!-- SAME MOBILE MENU & REVEAL SCRIPT (copied) -->
+  <!-- SAME MOBILE MENU & REVEAL SCRIPT -->
   <script>
     const mobileMenu = document.getElementById('mobile-menu');
     const menuPanel = mobileMenu.querySelector('div.absolute.inset-0.bg-navy');
