@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GrihoGori — About Us · Master Builder</title>
+
+  <!-- Fonts (same as homepage) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="shortcut icon" href="images/fav-icon.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            mono: ['"Roboto Mono"', 'monospace'],
+          },
+          colors: {
+            navy: '#1A2F2A',        // muted dark green
+            gold: '#C5A059',         // warm gold
+            stone: '#E5E5E5',
+            charcoal: '#333333',
+            void: '#0F1F1A',         // deeper green
+            glass: 'rgba(26, 47, 42, 0.6)',
+          },
+          animation: {
+            'grid-flow': 'gridFlow 60s linear infinite',
+            'glow-pulse': 'glowPulse 4s ease-in-out infinite',
+            'fade-up': 'fadeUp 0.8s ease-out forwards',
+            'scan': 'scan 4s linear infinite',
+          },
+          keyframes: {
+            gridFlow: { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '40px 40px' } },
+            glowPulse: { '0%, 100%': { opacity: 0.3, filter: 'brightness(1)' }, '50%': { opacity: 0.6, filter: 'brightness(1.2)' } },
+            fadeUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            scan: { '0%': { transform: 'translateY(-100%)' }, '100%': { transform: 'translateY(100%)' } }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --navy: #1A2F2A;
+      --gold: #C5A059;
+      --stone: #E5E5E5;
+    }
+    body {
+      background-color: var(--navy);
+      color: var(--stone);
+      overflow-x: hidden;
+    }
+    body.no-scroll {
+      overflow: hidden;
+      touch-action: none;
+    }
+    .blueprint-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(197, 160, 89, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(197, 160, 89, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridFlow 60s linear infinite;
+      mask-image: radial-gradient(circle at 50% 40%, black 40%, transparent 90%);
+    }
+    .glass-card {
+      background: rgba(26, 47, 42, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(197, 160, 89, 0.1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 0 15px rgba(197, 160, 89, 0.05);
+      transition: all 0.4s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(197, 160, 89, 0.4);
+      box-shadow: 0 10px 40px rgba(197, 160, 89, 0.15);
+      transform: translateY(-4px);
+    }
+    .gradient-text-gold {
+      background: linear-gradient(135deg, #F0E6D2 0%, #C5A059 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .btn-gold {
+      position: relative;
+      background: linear-gradient(90deg, rgba(197, 160, 89, 0.1), rgba(197, 160, 89, 0.05));
+      border: 1px solid rgba(197, 160, 89, 0.4);
+      color: #C5A059;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-gold:hover::before {
+      left: 100%;
+    }
+    .btn-gold:hover {
+      border-color: #C5A059;
+      box-shadow: 0 0 25px rgba(197, 160, 89, 0.2);
+      background: rgba(197, 160, 89, 0.1);
+      color: white;
+    }
+    .btn-solid-gold {
+      background: #C5A059;
+      color: #0F1F1A;
+      transition: all 0.3s ease;
+    }
+    .btn-solid-gold:hover {
+      background: #e6c885;
+      box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+      transform: translateY(-2px);
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    ::selection {
+      background: rgba(197, 160, 89, 0.3);
+      color: white;
+    }
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(197, 160, 89, 0.5);
+      box-shadow: 0 0 10px rgba(197, 160, 89, 0.8);
+      animation: scan 4s linear infinite;
+      opacity: 0.3;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1A2F2A;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2b4a3a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C5A059;
+    }
+    .formula-block {
+      background: rgba(0,0,0,0.3);
+      border-left: 3px solid #C5A059;
+      padding: 1rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.1rem;
+      color: #e0d6c0;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-gold selection:text-white font-sans">
+
+  <!-- Background Layer (same as index) -->
+  <div class="blueprint-bg"></div>
+  <div class="fixed inset-0 bg-gradient-to-b from-navy/90 via-navy/50 to-navy pointer-events-none z-[-1]"></div>
+
+  <!-- HEADER (exact copy from index.html, unchanged) -->
+  <header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-navy/90 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center">
+        <img src="images/Grihogori-logo-MIX.png" alt="Grihogori — Design. Build. Live" class="object-contain" style="width:235px; height:80px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <span class="hidden font-serif font-bold tracking-wide text-stone text-xl">
+          Grihogori
+          <span class="block font-mono text-[10px] tracking-[0.3em] text-gold uppercase">Design. Build. Live</span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-8">
+        <ul class="flex gap-6 text-xs font-semibold tracking-widest text-slate-400 uppercase font-sans">
+          <li><a href="index.html" class="hover:text-gold transition-colors">HOME</a></li>
+          <li><a href="#about" class="hover:text-gold transition-colors">ABOUT US</a></li>
+          <li><a href="#services" class="hover:text-gold transition-colors">SERVICES</a></li>
+          <li><a href="#portfolio" class="hover:text-gold transition-colors">PORTFOLIO</a></li>
+          <li><a href="#process" class="hover:text-gold transition-colors">OUR PROCESS</a></li>
+          <li><a href="#insights" class="hover:text-gold transition-colors">INSIGHTS</a></li>
+        </ul>
+        <a href="#contact" class="btn-gold px-6 py-2.5 rounded-sm text-xs font-bold tracking-widest uppercase">CONTACT</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden text-stone p-2 border border-white/10 rounded hover:bg-white/5 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu (same structure) -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] lg:hidden pointer-events-none opacity-0 transition-opacity duration-300">
+      <div id="menu-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+      <div class="absolute inset-0 bg-navy translate-x-full transition-transform duration-300 will-change-transform h-dvh overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] pt-[max(7rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))] px-6">
+        <button id="close-menu-btn" aria-label="Close menu" class="absolute top-[max(1.5rem,env(safe-area-inset-top))] right-6 text-white/50 hover:text-gold transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div class="max-w-md mx-auto w-full flex flex-col items-center gap-5">
+          <a href="index.html" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">HOME</a>
+          <a href="#about" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">ABOUT US</a>
+          <a href="#services" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">SERVICES</a>
+          <a href="#portfolio" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">PORTFOLIO</a>
+          <a href="#process" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">OUR PROCESS</a>
+          <a href="#insights" class="mobile-link w-full text-center text-xl font-serif text-stone hover:text-gold transition-colors uppercase tracking-widest py-3">INSIGHTS</a>
+          <a href="#contact" class="mobile-link btn-solid-gold w-full text-center px-10 py-4 text-lg font-bold text-navy uppercase tracking-widest rounded-sm mt-2">CONTACT</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN ABOUT CONTENT -->
+  <main class="pt-32 md:pt-40 pb-20">
+
+    <!-- Hero (smaller than homepage) -->
+    <section class="relative overflow-hidden reveal">
+      <div class="absolute inset-0 z-[-2] opacity-20">
+        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale brightness-50" alt="Foundation">
+        <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/70 to-transparent"></div>
+        <div class="scan-line"></div>
+      </div>
+      <div class="max-w-5xl mx-auto px-6 py-16 md:py-24 relative z-10 text-center">
+        <span class="font-mono text-xs text-gold tracking-widest uppercase mb-4 block">Identity · Legacy · DNA</span>
+        <h1 class="font-serif text-5xl md:text-7xl font-bold text-white leading-tight">
+          Crafting the Future, <span class="text-gold italic">Respecting the Foundation.</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-slate-300 mt-6 mx-auto max-w-3xl font-light leading-relaxed text-center">
+          We are the architects of permanence. At GrihoGori, we merge the soul of an artist with the cold, hard logic of an engineer.
+        </p>
+      </div>
+    </section>
+
+    <!-- OUR IDENTITY: Master Builder -->
+    <section id="about" class="py-20 reveal">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <span class="font-mono text-gold text-sm tracking-widest uppercase">01 / identity</span>
+            <h2 class="font-serif text-4xl font-bold text-white mt-2 mb-6">The Return of the <span class="text-gold">Master Builder</span></h2>
+            <div class="space-y-5 text-slate-300 leading-relaxed">
+              <p>GrihoGori was born out of a passion for structural perfection. In an era where design and construction have become dangerously fragmented, we have revived the ancient philosophy of the "Master Builder." We are not just a collective of veteran architects, innovative interior designers, and master civil engineers—we are a single, unified brain.</p>
+              <p>We believe that every project, whether a boutique urban residence or a sprawling commercial complex, deserves a holistic approach where the designer and the builder are one and the same.</p>
+              <p>At GrihoGori, we don't just "provide a service." We act as the guardians of your investment. We understand that for our clients, a building is more than just an asset—it is a legacy, a sanctuary, and a physical manifestation of their life’s work. Our mission is to ensure that legacy stands unyielding against time.</p>
+            </div>
+          </div>
+          <div class="glass-card p-8 rounded-sm border-gold/20">
+            <div class="aspect-video bg-black/40 flex items-center justify-center border border-white/10">
+              <svg class="w-24 h-24 text-gold/40" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <p class="text-sm font-mono text-gold/70 mt-4 text-center">“One brain, one responsibility — zero fragmentation”</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR DNA: three pillars -->
+    <section id="services" class="py-16 bg-black/20 reveal">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+          <span class="font-mono text-gold text-sm tracking-widest uppercase">02 / our dna</span>
+          <h2 class="font-serif text-4xl font-bold text-white mt-2">The Core Values of <span class="text-gold">Excellence</span></h2>
+          <p class="text-slate-400 max-w-2xl mx-auto mt-4">Three non-negotiable pillars that define the GrihoGori standard.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <!-- Integrity First -->
+          <div class="glass-card p-8 rounded-sm reveal hover:border-gold/40 transition-all">
+            <div class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-5 text-gold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-stone mb-3">Integrity First</h3>
+            <p class="text-sm text-slate-400 mb-3 leading-relaxed"><span class="text-gold font-medium">“Subsurface Honesty”</span> — In construction, the most critical elements are the ones you will never see. We document the hidden stages with the same fervor as the final reveal. If it isn't perfect under the plaster, it isn't a GrihoGori build.</p>
+            <ul class="text-xs font-mono text-gold/80 space-y-1 list-disc pl-4">
+              <li>No shortcuts: exact steel grade, exact ratios</li>
+              <li>Verification of every buried beam</li>
+            </ul>
+          </div>
+
+          <!-- Precision Engineering -->
+          <div class="glass-card p-8 rounded-sm reveal hover:border-gold/40 transition-all">
+            <div class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-5 text-gold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 3v9a1 1 0 01-1 1H8a1 1 0 01-1-1V7L8 4z" />
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-stone mb-3">Precision Engineering</h3>
+            <p class="text-sm text-slate-400 mb-3 leading-relaxed">We replace guesswork with mathematical certainty. Our engineering division utilizes advanced load‑bearing simulations and soil‑specific foundation modeling.</p>
+            <div class="formula-block my-4 text-sm">
+              <span class="text-gold">Aₛ = M / (φ · fᵧ · (d – a/2))</span>
+            </div>
+            <p class="text-xs text-slate-400">By calculating the exact Reinforcement Area (Aₛ), we ensure your structure is engineered for the 50‑year seismic cycle, not just the local building code.</p>
+          </div>
+
+          <!-- Sustainable Innovation -->
+          <div class="glass-card p-8 rounded-sm reveal hover:border-gold/40 transition-all">
+            <div class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mb-5 text-gold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-stone mb-3">Sustainable Innovation</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">We design for 2026 & beyond. Passive architecture reduces HVAC reliance by up to 30%. Smart ecosystems, solar‑ready, AI‑integrated — your home stays modern for decades.</p>
+            <ul class="text-xs font-mono text-gold/80 space-y-1 mt-3 list-disc pl-4">
+              <li>Thermal‑mass modeling & wind‑tunnel simulations</li>
+              <li>Living materials + circadian lighting grids</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE GRIHOGORI PROMISE (quote style) -->
+    <section class="py-24 relative overflow-hidden reveal">
+      <div class="absolute inset-0 z-[-2] opacity-10">
+        <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale" alt="Steel structure">
+      </div>
+      <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <svg class="w-16 h-16 text-gold/30 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M14.017 21L14.017 18C14.017 16.8954 13.1216 16 12.017 16H11.983C10.8784 16 9.98298 16.8954 9.98298 18L9.98298 21H5V11.5438L12 5.03055L19 11.5438V21H14.017ZM12 8L12 4L12 8Z" stroke="currentColor" stroke-width="2" fill="none" />
+        </svg>
+        <h3 class="font-serif text-3xl md:text-4xl text-stone italic leading-tight mb-8">
+          “We don't just build to fulfill a contract. We build to satisfy the laws of physics and the demands of art. When you step into a GrihoGori space, you are stepping into a structure where every line has a purpose and every beam has a promise.”
+        </h3>
+        <div class="inline-block border-t border-gold/30 pt-4">
+          <span class="font-mono text-gold tracking-widest uppercase text-sm">— The GrihoGori Collective</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- optional small stats / legacy (can mirror homepage but minimal) -->
+    <section class="py-20 border-b border-white/5 bg-navy reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
+        <div class="text-center p-6">
+          <div class="font-serif text-4xl md:text-5xl font-bold text-gold mb-2">4</div>
+          <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">generations of know-how</div>
+        </div>
+        <div class="text-center p-6">
+          <div class="font-serif text-4xl md:text-5xl font-bold text-gold mb-2">100%</div>
+          <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">subsurface honesty</div>
+        </div>
+        <div class="text-center p-6">
+          <div class="font-serif text-4xl md:text-5xl font-bold text-gold mb-2">∞</div>
+          <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">legacy mindset</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- CONTACT (same form as index, but could be kept) – we keep it to match footer links -->
+    <section id="contact" class="py-24 relative overflow-hidden bg-white/[0.02] reveal">
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="glass-card p-10 rounded-sm border-t border-gold/20">
+          <div class="text-center mb-10">
+            <span class="font-mono text-xs text-gold uppercase tracking-widest">Initialization</span>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold mt-2 text-white">Request a Turnkey Consultation</h2>
+          </div>
+          <form class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-xs font-mono text-slate-500 mb-2">FULL NAME</label>
+                <input type="text" placeholder="Enter your name" class="w-full bg-navy/50 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all font-sans">
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-slate-500 mb-2">CONTACT SIGNAL</label>
+                <input type="text" placeholder="Phone / Email" class="w-full bg-navy/50 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all font-sans">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-500 mb-2">PROJECT PARAMETERS</label>
+              <select class="w-full bg-navy/50 border border-white/10 rounded-sm px-4 py-3 text-slate-300 focus:outline-none focus:border-gold transition-all font-sans">
+                <option>Residential Villa</option>
+                <option>Commercial Landmark</option>
+                <option>Luxury Interiors</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-500 mb-2">VISION DATA</label>
+              <textarea rows="4" placeholder="Tell us about the plot & vision..." class="w-full bg-navy/50 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all font-sans"></textarea>
+            </div>
+            <button type="button" class="w-full btn-solid-gold py-4 rounded-sm font-bold text-navy tracking-wide uppercase mt-4 hover:shadow-lg hover:shadow-gold/20">Submit Protocol</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (exact copy from index.html, unchanged) -->
+  <footer class="relative bg-void border-t border-white/5 pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div class="space-y-2">
+          <a href="index.html" class="flex items-center gap-3">
+            <img src="images/white Grihogori-logo-footer.png" alt="">
+          </a>
+          <p class="text-slate-400 text-sm leading-relaxed font-sans"><br>The Master Builder tradition revived for 2026.</p>
+          <div class="flex gap-4">
+            <div class="w-8 h-8 bg-white/5 flex items-center justify-center text-slate-400 hover:text-gold hover:bg-white/10 transition-colors rounded-sm cursor-pointer">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </div>
+            <div class="w-8 h-8 bg-white/5 flex items-center justify-center text-slate-400 hover:text-gold hover:bg-white/10 transition-colors rounded-sm cursor-pointer">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-serif font-bold text-white mb-6">Navigation</h4>
+          <ul class="space-y-3 text-sm text-slate-400 font-sans">
+            <li><a href="index.html" class="hover:text-gold transition-colors">HOME</a></li>
+            <li><a href="#about" class="hover:text-gold transition-colors">ABOUT US</a></li>
+            <li><a href="#services" class="hover:text-gold transition-colors">SERVICES</a></li>
+            <li><a href="#portfolio" class="hover:text-gold transition-colors">PORTFOLIO</a></li>
+            <li><a href="#process" class="hover:text-gold transition-colors">OUR PROCESS</a></li>
+            <li><a href="#insights" class="hover:text-gold transition-colors">INSIGHTS</a></li>
+            <li><a href="#contact" class="hover:text-gold transition-colors">CONTACT</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-serif font-bold text-white mb-6">Services</h4>
+          <ul class="space-y-3 text-sm text-slate-400 font-sans">
+            <li><a href="#" class="hover:text-gold transition-colors">Architectural Design</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors">Interior Architecture</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors">Turnkey Construction</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors">Consulting</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-serif font-bold text-white mb-6">Stay Updated</h4>
+          <form class="flex gap-2">
+            <input type="email" placeholder="Email" class="bg-white/5 border border-white/10 text-white px-4 py-2 rounded-sm text-sm w-full focus:border-gold focus:outline-none placeholder:text-slate-600 font-sans">
+            <button type="button" class="bg-gold text-navy font-bold px-4 py-2 rounded-sm text-xs uppercase hover:bg-white hover:text-navy transition-colors">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-600 font-mono text-center md:text-left">
+        <div>&copy; 2026 GrihoGori. All Rights Reserved.</div>
+        <div>Design. Build. Live.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SAME MOBILE MENU & REVEAL SCRIPT (copied) -->
+  <script>
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuPanel = mobileMenu.querySelector('div.absolute.inset-0.bg-navy');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const menuBackdrop = document.getElementById('menu-backdrop');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    let isOpen = false;
+
+    function openMenu() {
+      if (isOpen) return;
+      isOpen = true;
+      mobileMenu.classList.remove('pointer-events-none', 'opacity-0');
+      mobileMenu.classList.add('opacity-100');
+      menuPanel.classList.remove('translate-x-full');
+      document.body.classList.add('no-scroll');
+      mobileMenuBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+      if (!isOpen) return;
+      isOpen = false;
+      menuPanel.classList.add('translate-x-full');
+      mobileMenu.classList.remove('opacity-100');
+      mobileMenu.classList.add('opacity-0');
+      document.body.classList.remove('no-scroll');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      setTimeout(() => { if (!isOpen) mobileMenu.classList.add('pointer-events-none'); }, 300);
+    }
+    function toggleMenu() { isOpen ? closeMenu() : openMenu(); }
+    mobileMenuBtn.addEventListener('click', toggleMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    menuBackdrop.addEventListener('click', closeMenu);
+    mobileLinks.forEach(link => { link.addEventListener('click', closeMenu); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    window.addEventListener('resize', () => { if (window.innerWidth >= 1024) closeMenu(); });
+
+    // scroll reveal
+    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
+    }, observerOptions);
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
